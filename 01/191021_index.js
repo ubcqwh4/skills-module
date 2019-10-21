@@ -3,9 +3,9 @@ const regl = require('regl')()    									//import regl library
 const strVertex = require('./shaders/191015_vertexShader.js')		//import vertex shader
 const strFrag = require('./shaders/191015_fragShader.js')			//import fragment shader
 const loadObj = require('./utils/loadObj.js')						//import loadObj tool
+const getDrawCall = require('./getDrawCall.js')						//import loadObj tool
 const glm = require('gl-matrix') 									//import gl-matrix for the matrix & vector math
 var mat4=glm.mat4
-
 
 //setting up camera stuff
 // create the projection matrix for field of view
@@ -34,8 +34,44 @@ var drawCube2;
 var drawCube3;
 var drawSpheres;
 
+var allDrawCalls = [];
+
+getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceBack.obj', 'Back', function(drawCall) {
+	allDrawCalls.push(drawCall);
+});
+
+getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceFront.obj', 'Front', function(drawCall) {
+	allDrawCalls.push(drawCall);
+});
+
+getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceFront.obj', 'Front', function(drawCall) {
+	allDrawCalls.push(drawCall);
+});
+
+getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceFront.obj', 'Front', function(drawCall) {
+	allDrawCalls.push(drawCall);
+});
+
+getDrawCall('./assets/webGL_model1.obj', 'whatever', function(drawCall) {
+	allDrawCalls.push(drawCall);
+});
+
+// getDrawCall('./assets/webGL_model1.obj', function(drawCall) {
+
+// });
+
+// getDrawCall('./assets/webGL_model1.obj', function(drawCall) {
+
+// });
+
+// getDrawCall('./assets/webGL_model1.obj', function(drawCall) {
+
+// });
+
 //assigning attributes to drawCube 
 //load c4d file: webGL_model1.obj
+
+/*
 loadObj('./assets/webGL_model1.obj',function(obj){
 	console.log('Model Loaded',obj)
 
@@ -142,6 +178,7 @@ loadObj('./assets/webGL_model_spheres.obj',function(obj){
 	})	
 })
 
+*/
 /////////////////////////////////////////////////////
 
 
@@ -178,6 +215,29 @@ function render (){
 	mat4.lookAt(viewMatrix, [mouseX,0,10], [0,0,0], [0,1,0]) //use mouseX position for camera position
 	
 	clear()
+
+	for(var i=0; i<allDrawCalls.length; i++) {
+		var drawCall = allDrawCalls[i];
+
+		var color = [0.0, 0.0, 0.0];
+		
+		if(drawCall.ID == 'Front') {
+			color = [1.0, 0.0, 0.0]
+		} else if(drawCall.ID == 'Back') {
+			color = [0.0, 0.0, 1.0]
+		} else if(drawCall.ID == 'whatever') {
+			color = [0.0, 1.0, 0.0]
+		}
+
+		var obj = {
+			time:currTime,
+			projection: projectionMatrix,
+			view:viewMatrix,
+			translate: [0,-3.5,-4*2],
+			color:color
+			}
+		drawCall(obj)
+	}
 
 	//if drawCube exists, then call the function
 	if (drawCube !=undefined){
