@@ -15,7 +15,7 @@
     "start": "budo 191014_index.js --live -- -t babelify",
     "start02": "budo index02.js --live -- -t babelify",
     "start03": "budo 191015_index.js --live -- -t babelify",
-    "start04": "budo 191018_index.js --live -- -t babelify",
+    "start04": "budo 191021_index.js --live -- -t babelify",
     "test": "echo \"Error: no test specified\" && exit 1",
     "texture":  "budo ./lessons/texture.js --live -- -t babelify"
   },

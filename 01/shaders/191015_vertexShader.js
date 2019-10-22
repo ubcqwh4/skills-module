@@ -16,23 +16,23 @@ module.exports = `
 	varying vec2 vUV;	
 
 	//rotation of the model
-	/*
+	
 	vec2 rotate(vec2 v, float a) {
 		float s = sin(a);
 		float c = cos(a);
 		mat2 m = mat2(c, -s, s, c);
 		return m * v;
 	}
-	*/
+
 	
 	void main() {  
     vec3 pos = aPosition;
     pos*=0.00005;	  //increase position
     pos+= uTranslate; //add translate to position
 
-    //pos.xz = rotate(pos.xz, uTime * 0.8);
+    // pos.xz = rotate(pos.xz, uTime * 1.8);
 
-		gl_Position = uProjectionMatrix*uViewMatrix*vec4(pos, 1.0);            	
-		vUV = aUV;
-		}
-	`
+	gl_Position = uProjectionMatrix*uViewMatrix*vec4(pos, 1.0);            	
+	vUV = aUV;
+}
+`

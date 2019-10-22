@@ -17,7 +17,7 @@ function getDrawCall(path, mID, mCallback) {// input : path to the 3d model
 		}
 
 		//create draw call
-		var drawCubeFaceBack = regl({						  			
+		var drawCall = regl({						  			
 			uniforms:{
 				uTime: regl.prop('time'),
 				uProjectionMatrix: regl.prop('projection'),
@@ -31,9 +31,9 @@ function getDrawCall(path, mID, mCallback) {// input : path to the 3d model
 			count: obj.count
 		})
 
-		drawCubeFaceBack.ID = mID;
+		drawCall.ID = mID;
 
-		mCallback(drawCubeFaceBack);
+		mCallback(drawCall);
 	})
 
 }

@@ -3,7 +3,7 @@ const regl = require('regl')()    									//import regl library
 const strVertex = require('./shaders/191015_vertexShader.js')		//import vertex shader
 const strFrag = require('./shaders/191015_fragShader.js')			//import fragment shader
 const loadObj = require('./utils/loadObj.js')						//import loadObj tool
-const getDrawCall = require('./getDrawCall.js')						//import loadObj tool
+const getDrawCall = require('./191021_getDrawCall.js')						//import loadObj tool
 const glm = require('gl-matrix') 									//import gl-matrix for the matrix & vector math
 var mat4=glm.mat4
 
@@ -21,10 +21,7 @@ var viewMatrix = mat4.create()
 var eye = [0, 0, 10]
 var center = [0, 0, 0]
 var up = [0, 1, 0]
-mat4.lookAt(viewMatrix, eye, near, far) 				//the position of the camera 
-
-
-
+mat4.lookAt(viewMatrix, eye, center, up) 				//the position of the camera 
 
 ///////////////////////////////////////////////
 
@@ -35,157 +32,55 @@ var drawCube3;
 var drawSpheres;
 
 var allDrawCalls = [];
+var drawFrame;
+var drawFront;
+var drawTop;
+var drawRight;
+var drawBack;
 
 getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceBack.obj', 'Back', function(drawCall) {
-	allDrawCalls.push(drawCall);
+	//allDrawCalls.push(drawCall);
+	drawBack = drawCall;
+});
+
+getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceTop.obj', 'Top', function(drawCall) {
+	//allDrawCalls.push(drawCall);
+	drawTop = drawCall;
+});
+
+getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceRight.obj', 'Right', function(drawCall) {
+	//allDrawCalls.push(drawCall);
+	drawRight = drawCall;
 });
 
 getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceFront.obj', 'Front', function(drawCall) {
-	allDrawCalls.push(drawCall);
+	//allDrawCalls.push(drawCall);
+	drawFront = drawCall;
 });
 
-getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceFront.obj', 'Front', function(drawCall) {
-	allDrawCalls.push(drawCall);
+
+// getDrawCall('./assets/webGL_model1.obj', 'whatever', function(drawCall) {
+// 	allDrawCalls.push(drawCall);
+// }); 
+
+
+getDrawCall('./assets/webGL_model_frame.obj', 'Frame', function(drawCall) {
+	// allDrawCalls.push(drawCall);
+	drawFrame = drawCall;
 });
 
-getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceFront.obj', 'Front', function(drawCall) {
-	allDrawCalls.push(drawCall);
-});
-
-getDrawCall('./assets/webGL_model1.obj', 'whatever', function(drawCall) {
-	allDrawCalls.push(drawCall);
-});
-
-// getDrawCall('./assets/webGL_model1.obj', function(drawCall) {
-
+// getDrawCall('./assets/webGL_model_spheres.obj', 'SPheres', function(drawCall) {
+// 	//allDrawCalls.push(drawCall);
+// 	drawSpheres = drawCall;
+	
 // });
-
-// getDrawCall('./assets/webGL_model1.obj', function(drawCall) {
-
-// });
-
-// getDrawCall('./assets/webGL_model1.obj', function(drawCall) {
-
-// });
-
-//assigning attributes to drawCube 
-//load c4d file: webGL_model1.obj
-
-/*
-loadObj('./assets/webGL_model1.obj',function(obj){
-	console.log('Model Loaded',obj)
-
-	//create the attributes
-	var attributes = { 					
-	aPosition: regl.buffer(obj.positions),  
-	aUV: regl.buffer(obj.uvs), 
-	}
-
-	//create draw call
-	drawCube = regl({						  			
-	uniforms:{
-		uTime: regl.prop('time'),
-		uProjectionMatrix: projectionMatrix,
-		uViewMatrix: regl.prop('view'),
-		uTranslate:regl.prop('translate'),
-		uColor:regl.prop('color')
-	},
-	attributes: attributes,
-	frag: strFrag,
-	vert: strVertex,
-	count: obj.count
-	})	
-})
-
-//assigning attributes to drawCube2 
-//load c4d file: webGL_model_cube1.obj
-loadObj('./assets/webGL_model_cube1.obj',function(obj){
-	console.log('Model Loaded',obj)
-
-	//create the attributes
-	var attributes = { 					
-	aPosition: regl.buffer(obj.positions),  
-	aUV: regl.buffer(obj.uvs), 
-	}
-
-	//create draw call
-	drawCube2 = regl({						  			
-	uniforms:{
-		uTime: regl.prop('time'),
-		uProjectionMatrix: projectionMatrix,
-		uViewMatrix: regl.prop('view'),
-		uTranslate:regl.prop('translate'),
-		uColor:regl.prop('color')
-	},
-	attributes: attributes,
-	frag: strFrag,
-	vert: strVertex,
-	count: obj.count
-	})	
-})
-
-//assigning attributes to drawCube3 
-//load c4d file: webGL_model_frame.obj
-loadObj('./assets/webGL_model_frame.obj',function(obj){
-	console.log('Model Loaded',obj)
-
-	//create the attributes
-	var attributes = { 					
-	aPosition: regl.buffer(obj.positions),  
-	aUV: regl.buffer(obj.uvs), 
-	}
-
-	//create draw call
-	drawCube3 = regl({						  			
-	uniforms:{
-		uTime: regl.prop('time'),
-		uProjectionMatrix: projectionMatrix,
-		uViewMatrix: regl.prop('view'),
-		uTranslate:regl.prop('translate'),
-		uColor:regl.prop('color')
-	},
-	attributes: attributes,
-	frag: strFrag,
-	vert: strVertex,
-	count: obj.count
-	})	
-})
-
-//assigning attributes to drawSphere
-//load c4d file: webGL_model_spheres.obj
-loadObj('./assets/webGL_model_spheres.obj',function(obj){
-	console.log('Model Loaded',obj)
-
-	//create the attributes
-	var attributes = { 					
-	aPosition: regl.buffer(obj.positions),  
-	aUV: regl.buffer(obj.uvs), 
-	}
-
-	//create draw call
-	drawSpheres = regl({						  			
-	uniforms:{
-		uTime: regl.prop('time'),
-		uProjectionMatrix: projectionMatrix,
-		uViewMatrix: regl.prop('view'),
-		uTranslate:regl.prop('translate'),
-		uColor:regl.prop('color')
-	},
-	attributes: attributes,
-	frag: strFrag,
-	vert: strVertex,
-	count: obj.count
-	})	
-})
-
-*/
-/////////////////////////////////////////////////////
 
 
 //declare variables 
 var currTime = 0; // create a variable for time
 var mouseX = 0;
 var mouseY = 0;
+var percent = 0;
 
 // create event listener for mouse move event to get mouse position
 window.addEventListener('mousemove',function(e){
@@ -196,23 +91,27 @@ window.addEventListener('mousemove',function(e){
 	percentX=percentX*2 - 1 // -1~1
 	percentY=percentY*2 - 1 // -1~1
 
-	var moveRange =20
-	mouseX = -percentX *moveRange
-	//mouseY = percentY *moveRange
+	var moveRange =30
+	mouseX = -percentX * moveRange
+	//mouseY = percentY * moveRange
 
 	// console.log(percentX,percentY)
+
+	percent = e.clientX / window.innerWidth
+	
 })
 			
 // create a clear function to clear the background		
 const clear = () => { 
 	regl.clear({    
-		color: [0.0, 0.0, 0.0, 0.2]	//set the background color [r,g,b,transparency]
+		color: [200/255, 182/255, 169/255, 1.0]	//set the background color [r,g,b,transparency]
 	})
 }
 
-function render (){         
+function render (){     
+	// console.log('percent', percent);    
 	currTime+=0.01	//increase time						 					
-	mat4.lookAt(viewMatrix, [mouseX,0,10], [0,0,0], [0,1,0]) //use mouseX position for camera position
+	mat4.lookAt(viewMatrix, [-6,0,10], [0,0,0], [0,1,0]) //use mouseX position for camera position
 	
 	clear()
 
@@ -220,86 +119,122 @@ function render (){
 		var drawCall = allDrawCalls[i];
 
 		var color = [0.0, 0.0, 0.0];
-		
+		var translate = [0,-3.5,-4*2];
+
 		if(drawCall.ID == 'Front') {
 			color = [1.0, 0.0, 0.0]
+			//translate = [3,-3.5,-4]
 		} else if(drawCall.ID == 'Back') {
 			color = [0.0, 0.0, 1.0]
+		} else if(drawCall.ID == 'Top') {
+			color = [1.0, 1.0, 0.0]
+		} else if(drawCall.ID == 'Right') {
+			color = [1.0, 1.0, 0.0]
 		} else if(drawCall.ID == 'whatever') {
-			color = [0.0, 1.0, 0.0]
+			color = [0.2, 0.3, 1.0]
+		} else if(drawCall.ID == 'Frame') {
+			color = [1.0, 1.0, 1.0];
 		}
 
 		var obj = {
 			time:currTime,
 			projection: projectionMatrix,
 			view:viewMatrix,
-			translate: [0,-3.5,-4*2],
+			translate:translate,
 			color:color
-			}
+		}
 		drawCall(obj)
 	}
 
-	//if drawCube exists, then call the function
-	if (drawCube !=undefined){
-		//var num = 3
-		
-		//for (var i=0; i<num; i++){
-			//for (var j=0; j<num; j++){
-				//for (var k=0; k<num; k++){
-					
-			//create object for uniform 
+	if(drawFrame) {
+		var num = 10;
+		for(var i=0; i<num; i=i+2) {
 			var obj = {
-			time:currTime,
-			project: projectionMatrix,
-			view:viewMatrix,
-			translate: [0,-3.5,-4*2],
-			color:[0.0,0.0,0.3]
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[0,-3.5+i*percent,-4*2+i*percent],
+				color:[1, 0.5, Math.random()]
 			}
-		drawCube(obj)
-		//}
-		//}
-	//}
+			drawFrame(obj)
+		}
 	}
 
-	if (drawCube2 !=undefined){
-
-			//create object for uniform 
+	if(drawFront) {
+		var num = 7;
+		for(var i=0; i<num; i=i+2) {
 			var obj = {
-			time:currTime,
-			project: projectionMatrix,
-			view:viewMatrix,
-			translate: [0,-3.5,-4*2.3],
-			color:[1.0,0.0,0.0]
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[0,-3.5+ -i*percent,-4*2+i*percent], //(-2*i+Math.sin(currTime*8))],
+				color:[166/255, 5/255, 5/255]
 			}
-		drawCube2(obj)
+			drawFront(obj)
 		}
+	}
 
-	if (drawCube3 !=undefined){
-
-			//create object for uniform 
+	if(drawTop) {
+		var num = 8;
+		for(var i=0; i<num; i++) {
 			var obj = {
-			time:currTime,
-			project: projectionMatrix,
-			view:viewMatrix,
-			translate: [0,(Math.sin(currTime*5))-3.5,-4*2.6],
-			color:[0.0,0.0,0.0]
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[0,-3.5+i*percent,-4*2+i*percent], //(-2*i+Math.sin(currTime*8))],
+				color:[2/255, 15/255, 89/255]
 			}
-		drawCube3(obj)
+			drawTop(obj)
 		}
+	}
 
-	if (drawSpheres !=undefined){
-
-			//create object for uniform 
+	if(drawRight) {
+		var num = 10;
+		for(var i=0; i<num; i=i+2) {
 			var obj = {
-			time:currTime,
-			project: projectionMatrix,
-			view:viewMatrix,
-			translate: [0,(Math.sin(currTime*6))-2.5,-4*2.3],
-			color:[1.0,0.0,0.0]
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[i*percent, -3.5+i*percent,-4*2],
+				//translate:[i-3, -5, i-2], //(-2*i+Math.sin(currTime*8))],
+				color:[229/255, 144/255, 11/255]
 			}
-		drawSpheres(obj)
-		}	
-			
+			drawRight(obj)
+		}
+	}
+
+	if(drawBack) {
+		var num = 10;
+		for(var i=0; i<num; i=i+2) {
+			var obj = {
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[0, -3.5,-4*2-i*percent],
+				color:[7/255, 23/255, 115/255]
+			}
+			drawBack(obj)
+		}
+	}
+
+	/*
+	if(drawSpheres) {
+		var num = 4;
+		for(var i=0; i<num; i++) {
+			for (var j=0;j<num;j++){
+				var obj = {
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[i, -4, i-6], //(-2*i+Math.sin(currTime*8))],
+				color:[0.0, 1.0, 1.0]
+				}
+			}
+			drawSpheres(obj)
+		}
+	}
+	*/
+	
 	//loop 	
 	window.requestAnimationFrame(render);   
 }
