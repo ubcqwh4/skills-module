@@ -25,18 +25,17 @@ mat4.lookAt(viewMatrix, eye, center, up) 				//the position of the camera
 
 ///////////////////////////////////////////////
 
-//declare variables drawCube calls 
-var drawCube;
-var drawCube2;
-var drawCube3;
-var drawSpheres;
-
+//declare variables drawCube calls
 var allDrawCalls = [];
 var drawFrame;
 var drawFront;
 var drawTop;
 var drawRight;
 var drawBack;
+var drawSpheres;
+var drawLoopLine;
+var drawLeftPlane;
+var drawSmallBall;
 
 getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceBack.obj', 'Back', function(drawCall) {
 	//allDrawCalls.push(drawCall);
@@ -58,10 +57,9 @@ getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceFront.obj', 'Front', fun
 	drawFront = drawCall;
 });
 
-
-// getDrawCall('./assets/webGL_model1.obj', 'whatever', function(drawCall) {
-// 	allDrawCalls.push(drawCall);
-// }); 
+getDrawCall('./assets/webGL_model1.obj', 'whatever', function(drawCall) {
+	allDrawCalls.push(drawCall);
+}); 
 
 
 getDrawCall('./assets/webGL_model_frame.obj', 'Frame', function(drawCall) {
@@ -72,8 +70,22 @@ getDrawCall('./assets/webGL_model_frame.obj', 'Frame', function(drawCall) {
 // getDrawCall('./assets/webGL_model_spheres.obj', 'SPheres', function(drawCall) {
 // 	//allDrawCalls.push(drawCall);
 // 	drawSpheres = drawCall;
-	
 // });
+
+getDrawCall('./assets/webGL_model_loopLine.obj', 'LoopLine', function(drawCall) {
+	//allDrawCalls.push(drawCall);
+	drawLoopLine = drawCall;
+});
+
+getDrawCall('./assets/webGL_model_leftPlane.obj', 'LeftPlane', function(drawCall) {
+	//allDrawCalls.push(drawCall);
+	drawLeftPlane = drawCall;
+});
+
+getDrawCall('./assets/webGL_model_smallBall.obj', 'SmallBall', function(drawCall) {
+	//allDrawCalls.push(drawCall);
+	drawSmallBall = drawCall;
+});
 
 
 //declare variables 
@@ -81,6 +93,7 @@ var currTime = 0; // create a variable for time
 var mouseX = 0;
 var mouseY = 0;
 var percent = 0;
+var percent1 = 0;
 
 // create event listener for mouse move event to get mouse position
 window.addEventListener('mousemove',function(e){
@@ -97,9 +110,11 @@ window.addEventListener('mousemove',function(e){
 
 	// console.log(percentX,percentY)
 
+	//percent = e.clientX / window.innerWidth
 	percent = e.clientX / window.innerWidth
 	
 })
+
 			
 // create a clear function to clear the background		
 const clear = () => { 
@@ -111,19 +126,17 @@ const clear = () => {
 function render (){     
 	// console.log('percent', percent);    
 	currTime+=0.01	//increase time						 					
-	mat4.lookAt(viewMatrix, [-6,0,10], [0,0,0], [0,1,0]) //use mouseX position for camera position
+	mat4.lookAt(viewMatrix, [0,0,15], [0,0,0], [0,1,0]) //use mouseX position for camera position
 	
 	clear()
 
 	for(var i=0; i<allDrawCalls.length; i++) {
 		var drawCall = allDrawCalls[i];
-
 		var color = [0.0, 0.0, 0.0];
 		var translate = [0,-3.5,-4*2];
 
 		if(drawCall.ID == 'Front') {
 			color = [1.0, 0.0, 0.0]
-			//translate = [3,-3.5,-4]
 		} else if(drawCall.ID == 'Back') {
 			color = [0.0, 0.0, 1.0]
 		} else if(drawCall.ID == 'Top') {
@@ -131,7 +144,7 @@ function render (){
 		} else if(drawCall.ID == 'Right') {
 			color = [1.0, 1.0, 0.0]
 		} else if(drawCall.ID == 'whatever') {
-			color = [0.2, 0.3, 1.0]
+			color = [1.0, 1.0, 1.0]
 		} else if(drawCall.ID == 'Frame') {
 			color = [1.0, 1.0, 1.0];
 		}
@@ -147,27 +160,30 @@ function render (){
 	}
 
 	if(drawFrame) {
-		var num = 10;
-		for(var i=0; i<num; i=i+2) {
+		var num = 4;
+		for(var i=0; i<num; i++) {
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[0,-3.5+i*percent,-4*2+i*percent],
-				color:[1, 0.5, Math.random()]
+				//translate:[0,-3.5,-4*2+i*percent*6+Math.sin(currTime*6)],
+				translate:[0,-3.5,-4*2+i*percent*6],
+				color:[0.0, 0.0, 0.0]
+				//color:[1, 0.5, Math.random()]
 			}
 			drawFrame(obj)
 		}
 	}
 
 	if(drawFront) {
-		var num = 7;
-		for(var i=0; i<num; i=i+2) {
+		var num = 4;
+		for(var i=0; i<num; i++) {
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[0,-3.5+ -i*percent,-4*2+i*percent], //(-2*i+Math.sin(currTime*8))],
+				//translate:[-i*percent*2,-3.5,-4*2+i*percent], //(-2*i+Math.sin(currTime*8))],
+				translate:[0-i*percent*4,-3.5,-4*2],
 				color:[166/255, 5/255, 5/255]
 			}
 			drawFront(obj)
@@ -175,13 +191,14 @@ function render (){
 	}
 
 	if(drawTop) {
-		var num = 8;
+		var num = 4;
 		for(var i=0; i<num; i++) {
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[0,-3.5+i*percent,-4*2+i*percent], //(-2*i+Math.sin(currTime*8))],
+				translate:[0,-3.5+i*percent*2,-4*2+i*percent], //(-2*i+Math.sin(currTime*8))],
+				//translate:[percent*4,-3.5+ -i*percent,-4*2+i*percent],
 				color:[2/255, 15/255, 89/255]
 			}
 			drawTop(obj)
@@ -189,51 +206,89 @@ function render (){
 	}
 
 	if(drawRight) {
-		var num = 10;
-		for(var i=0; i<num; i=i+2) {
+		var num = 4;
+		for(var i=0; i<num; i++) {
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[i*percent, -3.5+i*percent,-4*2],
-				//translate:[i-3, -5, i-2], //(-2*i+Math.sin(currTime*8))],
+				translate:[i*percent*4.5, -3.5,-4*2],
 				color:[229/255, 144/255, 11/255]
-			}
+		}
 			drawRight(obj)
 		}
 	}
 
 	if(drawBack) {
-		var num = 10;
-		for(var i=0; i<num; i=i+2) {
+		var num = 4;
+		for(var i=0; i<num; i++) {
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[0, -3.5,-4*2-i*percent],
+				translate:[i*percent*5, -3.5,-4*2],
 				color:[7/255, 23/255, 115/255]
 			}
 			drawBack(obj)
 		}
 	}
-
-	/*
+	
 	if(drawSpheres) {
-		var num = 4;
+		var num = 1;
 		for(var i=0; i<num; i++) {
-			for (var j=0;j<num;j++){
 				var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[i, -4, i-6], //(-2*i+Math.sin(currTime*8))],
-				color:[0.0, 1.0, 1.0]
+				translate:[0,-3.5+i*percent,-4*2+i*percent*2],
+				color:[229/255, 144/255, 11/255]
 				}
-			}
 			drawSpheres(obj)
 		}
 	}
-	*/
+
+	if(drawLoopLine) {
+		var num = 4;
+		for(var i=0; i<num; i++) {
+				var obj = {
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[0-i*percent*5,-3.5,-4*2],
+				color:[2/255, 15/255, 89/255]
+				}
+			drawLoopLine(obj)
+		}
+	}
+
+	if(drawLeftPlane) {
+		var num = 4;
+		for(var i=0; i<num; i++) {
+				var obj = {
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[-i*percent*5,-3.5,-4*2],
+				color:[2/255, 15/255, 89/255]
+				}
+			drawLeftPlane(obj)
+		}
+	}
+
+	if(drawSmallBall) {
+		var num = 4;
+		for(var i=0; i<num; i++) {
+				var obj = {
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[0-i*percent*4,-3.5,-4*2],
+				color:[229/255, 144/255, 11/255]
+				}
+			drawSmallBall(obj)
+		}
+	}
+	
 	
 	//loop 	
 	window.requestAnimationFrame(render);   

@@ -30,7 +30,7 @@ module.exports = `
     pos*=0.00005;	  //increase position
     pos+= uTranslate; //add translate to position
 
-    // pos.xz = rotate(pos.xz, uTime * 1.8);
+    //pos.xz = rotate(pos.xz, uTime * 1.8);
 
 	gl_Position = uProjectionMatrix*uViewMatrix*vec4(pos, 1.0);            	
 	vUV = aUV;
