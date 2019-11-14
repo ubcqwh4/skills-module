@@ -31,6 +31,7 @@ var drawFrame;
 var drawNShapedPiece;
 var drawPieceWithSquare;
 var drawPieceWithSlit;
+var drawPieceWithSlitCopy;
 var drawDecor1;
 var drawSphere;
 var drawHelix;
@@ -57,6 +58,11 @@ getDrawCall('./assets/bauhaus_2/pieceWithSlit.obj', 'pieceWithSlit', function(dr
 	drawPieceWithSlit = drawCall;
 });
 
+getDrawCall('./assets/bauhaus_2/pieceWithSlitCopy.obj', 'pieceWithSlitCopy', function(drawCall) {
+	drawPieceWithSlitCopy = drawCall;
+});
+
+
 getDrawCall('./assets/bauhaus_2/decor1.obj', 'decor1', function(drawCall) {
 	drawDecor1 = drawCall;
 });
@@ -75,6 +81,8 @@ var currTime = 0; // create a variable for time
 var mouseX = 0;
 var mouseY = 0;
 var percent = 0;
+var boxIndex = 0;
+var justGeneratedNew = false;
 
 // create event listener for mouse move event to get mouse position
 window.addEventListener('mousemove',function(e){
@@ -85,11 +93,11 @@ window.addEventListener('mousemove',function(e){
 	percentY=percentY*2 - 1 // -1~1
 
 	var moveRange = 30
-	mouseX = -percentX * moveRange
+	// mouseX = -percentX * moveRange
 
-	percent = e.clientX / window.innerWidth
 
-	
+	//percent = e.clientX / window.innerWidth
+
   	//mouseY = -map(y, 0, window.innerHeight, -25, 25)
 })
 			
@@ -101,8 +109,31 @@ const clear = () => {
 }
 
 function render (){     
+	// console.log('Percent', percent)
+
+	console.log('Percent', percent)
+	if(percent < 0.01) {
+
+		if(justGeneratedNew) {
+			console.log('just generated new index')
+		} else {
+
+			var oldIndex = boxIndex;
+			boxIndex = Math.floor(Math.random() * 5) - 2
+
+			console.log('new boxIndex', boxIndex);	
+			justGeneratedNew = true;
+		}
+		
+	} else {
+		justGeneratedNew = false;
+	}
+
+	// console.log('justGeneratedNew', justGeneratedNew)
+
+	percent = 0.5* Math.sin(currTime*4)+0.5;
 	currTime+=0.01						 					
-	mat4.lookAt(viewMatrix, [0,0,1], [0,0,0], [0,1,0]) //use mouseX position for camera position
+	mat4.lookAt(viewMatrix, [0,0,3], [0,0,0], [0,1,0]) //use mouseX position for camera position
 	
 	clear()
 
@@ -200,6 +231,21 @@ function render (){
 		}
 	}
 
+	if(drawPieceWithSlitCopy) {
+		var num = 3;
+		for(var i=0; i<num; i++) {
+			var obj = {
+				time:currTime,
+				projection: projectionMatrix,
+				view:viewMatrix,
+				translate:[0-i*percent*3,-1,-4*2],
+				//color:[229/255, 144/255, 11/255]
+				color:[7/255, 23/255, 115/255]
+			}
+			//drawPieceWithSlitCopy(obj)
+		}
+	}
+
 	if(drawDecor1) {
 		var num = 2;
 		//for(var i=0; i<num; i++) {
@@ -216,16 +262,16 @@ function render (){
 
 	if(drawSphere) {
 		var num = 1;
-		//for(var i=0; i<num; i++) {
+		// for(var i=0; i<num; i++) {
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[0,-1.4+Math.sin(currTime*5),-4*2],
+				translate:[boxIndex*percent*2.5,-1.4+Math.sin(currTime*5),-4*2],
 				color:[1.0, 1.0, 1.0]
 			}
 			drawSphere(obj)
-		//}
+		// }
 	}
 
 

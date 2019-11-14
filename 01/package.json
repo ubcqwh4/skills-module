@@ -8,7 +8,8 @@
     "babelify": "^10.0.0",
     "geom-parse-obj": "^1.0.0",
     "gl-matrix": "^3.1.0",
-    "regl": "^1.3.13"
+    "regl": "^1.3.13",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -18,9 +19,10 @@
     "start04": "budo 191021_index.js --live -- -t babelify",
     "start05": "budo 191023_index.js --live -- -t babelify",
     "start06": "budo 191025_bauhausCube --live -- -t babelify",
+    "start07": "budo 191104_bauhausCube_withRemote --live -- -t babelify",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "texture":  "budo ./lessons/texture.js --live -- -t babelify"
-
+    "texture": "budo ./lessons/texture.js --live -- -t babelify",
+    "final": "budo ./01_finalProject/191111_mediaCityPortraits.js --live -- -t babelify"
   },
   "author": "",
   "license": "ISC"

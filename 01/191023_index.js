@@ -57,20 +57,15 @@ getDrawCall('./assets/01_modelParts/webGL_model_cubeFaceFront.obj', 'Front', fun
 	drawFront = drawCall;
 });
 
-// getDrawCall('./assets/webGL_model1.obj', 'whatever', function(drawCall) {
-// 	allDrawCalls.push(drawCall);
-// }); 
+getDrawCall('./assets/webGL_model1.obj', 'whatever', function(drawCall) {
+	allDrawCalls.push(drawCall);
+}); 
 
 
 getDrawCall('./assets/webGL_model_frame.obj', 'Frame', function(drawCall) {
 	// allDrawCalls.push(drawCall);
 	drawFrame = drawCall;
 });
-
-// getDrawCall('./assets/webGL_model_spheres.obj', 'SPheres', function(drawCall) {
-// 	//allDrawCalls.push(drawCall);
-// 	drawSpheres = drawCall;
-// });
 
 getDrawCall('./assets/webGL_model_loopLine.obj', 'LoopLine', function(drawCall) {
 	//allDrawCalls.push(drawCall);
@@ -95,6 +90,7 @@ var mouseY = 0;
 var percent = 0;
 var mappedPercent = 0;
 var state = 0;
+var fakeMouse = 0
 
 //https://gist.github.com/yiwenl/4bd4dc31bdc31b14ad6e95651ee7437b#file-map-js
 function map (value, start, end, newStart, newEnd) {
@@ -118,7 +114,7 @@ window.addEventListener('mousemove',function(e){
 	percentY=percentY*2 - 1 // -1~1
 
 	var moveRange =30
-	mouseX = -percentX * moveRange
+	//mouseX = -percentX * moveRange
 	//mouseY = percentY * moveRange
 
 	percent = e.clientX / window.innerWidth
@@ -135,9 +131,12 @@ window.addEventListener('mousemove',function(e){
   		} 	else if (percent < 0.8) {
     		state = 3	
      mappedPercent = map(percent, 0.6, 0.8, 0, 1)
-  		} 	else {
+  		} 	else if (percent < 1.0) {
     		state = 4
-    	}		
+    mappedPercent = map(percent, 0.8, 1.0, 0, 1)
+  		} 	else {
+    		state = 5
+    	}			
     console.log('Percent, state, mappedP', percent, state, mappedPercent)			 	
 })
 			
@@ -149,11 +148,34 @@ const clear = () => {
 }
 
 function render (){     
+	fakeMouse += 0.0025;
+
+	if (fakeMouse < 0.2) {
+    state = 0
+    mappedPercent = map(fakeMouse, 0, 0.2,0,1)
+		}	else if (fakeMouse < 0.4) {
+    		state = 1
+     mappedPercent = map(fakeMouse, 0.2, 0.4, 0, 1)		
+    	} 	else if (fakeMouse < 0.6) {
+   		 	state = 2
+   	 mappedPercent = map(fakeMouse, 0.4, 0.6, 0, 1)
+  		} 	else if (fakeMouse < 0.8) {
+    		state = 3	
+     mappedPercent = map(fakeMouse, 0.6, 0.8, 0, 1)
+  		} 	else if (fakeMouse < 1.0) {
+    		state = 4
+    mappedPercent = map(fakeMouse, 0.8, 1.0, 0, 1)
+  		} 	else {
+    		state = 5
+    	}			
+
 	// console.log('percent', percent);    
 	currTime+=0.01	//increase time						 					
-	mat4.lookAt(viewMatrix, [-5,0,15], [0,0,0], [0,1,0]) //use mouseX position for camera position
-	
+	mat4.lookAt(viewMatrix, [0,0,16], [0,0,0], [0,1,0]) //use mouseX position for camera position
+
 	clear()
+
+	// offset = 0.5* Math.sin(currTime*4)+0.5;
 
 	for(var i=0; i<allDrawCalls.length; i++) {
 		var drawCall = allDrawCalls[i];
@@ -185,43 +207,74 @@ function render (){
 	}
 
 	if(drawFrame) {
-		var num = 4;
+		var num = 5;
 		for(var i=0; i<num; i++) {
-			for(var j=0; j<num; j++) {
+
+			var offset = 0;
+
+			if(state < 1) {
+				offset = 0; // mappercent0
+			} else if(state > 1) {
+				offset = i * 4; // mappercent = 1 fully opened
+			} else {
+				offset = i * mappedPercent * 4; 
+			}
+
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[0,-3.5+j*2,-4*2+i*mappedPercent*6],
+				translate:[0,-3.5,-4*2+offset],
 				color:[0.0, 0.0, 0.0]
 			}
 			drawFrame(obj)
-		}}
+		}
 	}
 
-	if(drawFront && state ==1) {
+	if(drawFront) {
 		var num = 4;
+
 		for(var i=0; i<num; i++) {
+			var offset = 0;
+
+			if(state < 2) {
+				offset = 0; // mappercent0
+			} else if(state > 2) {
+				offset = i * 4; // mappercent = 1 fully opened
+			} else {
+				offset = i * mappedPercent * 4; 
+			}
+
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
 				//translate:[-i*percent*2,-3.5,-4*2+i*percent], //(-2*i+Math.sin(currTime*8))],
-				translate:[0-i*mappedPercent*4,-3.5,-4*2],
+				translate:[0-offset,-3.5,-4*2],
 				color:[166/255, 5/255, 5/255]
 			}
 			drawFront(obj)
 		}
 	}
 
-	if(drawTop && state ==2) {
+	if(drawTop) {
 		var num = 4;
 		for(var i=0; i<num; i++) {
+			var offset = 0;
+
+			if(state < 3) {
+				offset = 0; // mappercent0
+			} else if(state > 3) {
+				offset = i * 2; // mappercent = 1 fully opened
+			} else {
+				offset = i * mappedPercent * 2; 
+			}
+
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[0,-3.5+i*mappedPercent*2,-4*2+i*mappedPercent], //(-2*i+Math.sin(currTime*8))],
+				translate:[0,-3.5+offset,-4*2+offset], //(-2*i+Math.sin(currTime*8))],
 				//translate:[percent*4,-3.5+ -i*percent,-4*2+i*percent],
 				color:[2/255, 15/255, 89/255]
 			}
@@ -232,11 +285,21 @@ function render (){
 	if(drawRight) {
 		var num = 5;
 		for(var i=0; i<num; i++) {
+			var offset = 0;
+
+			if(state < 4) {
+				offset = 0; // mappercent0
+			} else if(state > 4) {
+				offset = i * 3; // mappercent = 1 fully opened
+			} else {
+				offset = i * mappedPercent * 3; 
+			}
+
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[i*mappedPercent*4, -3.5,-4*2],
+				translate:[offset, -3.5,-4*2],
 				color:[229/255, 144/255, 11/255]
 		}
 			drawRight(obj)
@@ -244,13 +307,23 @@ function render (){
 	}
 
 	if(drawBack) {
-		var num = 5;
+		var num = 4;
 		for(var i=0; i<num; i++) {
+			var offset = 0;
+
+			if(state < 4) {
+				offset = 0; // mappercent0
+			} else if(state > 4) {
+				offset = i * 4.5; // mappercent = 1 fully opened
+			} else {
+				offset = i * mappedPercent * 4.5; 
+			}
+
 			var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[i*mappedPercent*4.5, -3.5,-4*2],
+				translate:[offset, -3.5,-4*2],
 				color:[7/255, 23/255, 115/255]
 			}
 			drawBack(obj)
@@ -260,11 +333,21 @@ function render (){
 	if(drawLoopLine) {
 		var num = 4;
 		for(var i=0; i<num; i++) {
+			var offset = 0;
+
+			if(state < 1) {
+				offset = 0; // mappercent0
+			} else if(state > 1) {
+				offset = i * 5; // mappercent = 1 fully opened
+			} else {
+				offset = i * mappedPercent * 5; 
+			}
+
 				var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[0-i*mappedPercent*5,-3.5,-4*2],
+				translate:[0-offset,-3.5,-4*2],
 				color:[2/255, 15/255, 89/255]
 				}
 			drawLoopLine(obj)
@@ -274,11 +357,21 @@ function render (){
 	if(drawLeftPlane) {
 		var num = 4;
 		for(var i=0; i<num; i++) {
+			var offset = 0;
+
+			if(state < 2) {
+				offset = 0; // mappercent0
+			} else if(state > 2) {
+				offset = i * 4; // mappercent = 1 fully opened
+			} else {
+				offset = i * mappedPercent * 4; 
+			}
+
 				var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[-i*mappedPercent*5,-3.5,-4*2],
+				translate:[-offset,-3.5,-4*2],
 				color:[2/255, 15/255, 89/255]
 				}
 			drawLeftPlane(obj)
@@ -288,11 +381,21 @@ function render (){
 	if(drawSmallBall) {
 		var num = 4;
 		for(var i=0; i<num; i++) {
+			var offset = 0;
+
+			if(state < 3) {
+				offset = 0; // mappercent0
+			} else if(state > 3) {
+				offset = i * 4; // mappercent = 1 fully opened
+			} else {
+				offset = i * mappedPercent * 4; 
+			}
+
 				var obj = {
 				time:currTime,
 				projection: projectionMatrix,
 				view:viewMatrix,
-				translate:[0-i*percent*4,-3.5,-4*2],
+				translate:[0-offset,-3.5,-4*2],
 				color:[229/255, 144/255, 11/255]
 				}
 			drawSmallBall(obj)
