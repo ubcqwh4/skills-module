@@ -144,18 +144,14 @@ function render () {
   // 3d model takes time to load, therefore check if drawCube is exist first before calling it
   
   if (drawSphere !== undefined) {
-    // create an object for uniform
-
     
-
-    /*
     // for loop for multiple flowers ( j )
     for(var j=0; j<6; j++) {
       var relativePosToStem = positionsOffsetsStem[j]
       
       for(var i=0; i<8; i++) {
-        var circleSize = circleSizes[i];
-        var posOffset = positionsOffsets[i];
+        var circleSize = circleSizes[i];      //loop through array for the size of circles
+        var posOffset = positionsOffsets[i];  //loop through array for the position of circles
         var obj = {
           time: currTime,
           view: viewMatrix,
@@ -164,26 +160,26 @@ function render () {
           translate: posOffset,
           translateStem: relativePosToStem
          }
-         // draw the sphere, don't forget the pass the obj in for uniform
+         // draw the sphere and pass the obj in for uniform
          drawSphere(obj)
        }
     }
 
-    */
-
+    /*
     for(var i=0; i<8; i++) {
-      var circleSize = circleSizes[i];
-      var posOffset = positionsOffsets[i];
-      var obj = {
+      var circleSize = circleSizes[i];      //loop through array for the size of circles
+      var posOffset = positionsOffsets[i];  //loop through array for the position of circles
+      var obj = {                           // create an object for uniform
         time: currTime,
         view: viewMatrix,
         projection: projectionMatrix,
         size: circleSize,
         translate: posOffset
        }
-       // draw the sphere, don't forget the pass the obj in for uniform
+       // draw the sphere, pass the obj in for uniforms
        drawSphere(obj)
      }
+     */
   }
 
   // make it loop
