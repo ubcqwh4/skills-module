@@ -31,7 +31,7 @@ mat4.lookAt(viewMatrix, eye, center, up)
 //clear the background 
 var clear = () => {
   regl.clear({
-    color: [0, 0, 0, 0.7] // white
+    color: [242.0/255.0, 223.0/255.0, 223.0/255.0, 1] // white
   })
 }
 
@@ -54,7 +54,6 @@ function map (value, start, end, newStart, newEnd) {
 }
 
 // create event listener for mouse move event in order to get mouse position
-
 window.addEventListener('mousemove', function (event) {
   var x = event.clientX // get the mosue position from the event
   var y = event.clientY
@@ -67,10 +66,13 @@ window.addEventListener('mousemove', function (event) {
 ////////////////////////////////////////////////////////
 
 // create a variable for draw call
-var drawSphere
+var drawSphere;
+//var drawSphereYellow;
+var drawStem1
 
 // instead of creating the attributes ourselves, now loading the 3d model instead
-loadObj('./assets/sphere.obj', function (obj) {
+
+loadObj('./assets/cube.obj', function (obj) {
   console.log('Model Loaded', obj)
 
   // create attributes
@@ -97,6 +99,36 @@ loadObj('./assets/sphere.obj', function (obj) {
   })
 })
 
+
+loadObj('./assets/stem1.obj', function (obj) {
+  console.log('Model Loaded', obj)
+
+  // create attributes
+  const attributes = {
+    aPosition: regl.buffer(obj.positions),
+    aUV: regl.buffer(obj.uvs)
+  }
+
+  // create the draw call and assign to the drawCube variable that we created
+  // so we can call the drawCube in the render function
+  drawStem1 = regl({
+    uniforms: {
+      uTime: regl.prop('time'),
+      uProjectionMatrix: regl.prop('projection'),
+      uViewMatrix: regl.prop('view'),
+      uTranslate: regl.prop('translate'),
+      uSize: regl.prop('size')
+    },
+    vert: vertStr,
+    frag: fragStr,
+    attributes: attributes,
+    count: obj.count // don't forget to use obj.count as count
+  })
+})
+
+
+/////////////////////////////////////////////////////////////////
+
 function render () {
   currTime += 0.01
 
@@ -105,53 +137,130 @@ function render () {
 
   // recalculate the view matrix because we are constantly moving the camera position now
   // use mouseX, mouseY for the position of camera
-  var eye = [mouseX, mouseY, 5]
+  var eye = [0, mouseY, 5]
   var center = [0, 0, 0]
   var up = [0, 1, 0]
   mat4.lookAt(viewMatrix, eye, center, up)
 
-  var circleSizes = [
-    47,
+  //declare array for size of balls
+  var circleSizesBlue = [
     34,
-    28,
     24,
     22,
-    21,
-    21,
-    21
+    12,
+    12,
+    10,
+    7,
+    5,
+    5,
+    5,
   ]
 
-  var positionsOffsets = [
+  var circleSizesYellow = [
+    17,
+    15,
+    10,
+    9,
+    8,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ]
+
+  var circleSizesRed = [
+    15,
+    14,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ]
+
+  var circleSizesGreen = [
+    47,
+    21,
+    13,
+    12,
+    11,
+    11,
+    9,
+    7,
+    0,
+    0,
+  ]
+
+  //declare array for position of balls relative to each other
+  var positionsOffsetsBlue = [
     [0, 0, 0],
-    [30,-6, 0],
-    [-30, 49, 0],
-    [3, 0, 0],
-    [4, 0, 0],
-    [5, 0, 0],
-    [6, 0, 0],
-    [7, 0, 0],
+    [82,-48, 0],//9*Math.sin(currTime*20)],
+    [152, 7,0],
+    [66, 11, 0],
+    [49,-9, 0],
+    [92, 35, 0],
+    [52, 22, 0],
+    [74,-19, 0],
+    [20,-26, 0],
+    [27,-37, 0],
   ]
 
+  var positionsOffsetsYellow = [
+    [0, 0, 0],
+    [-58,-26, 0],
+    [6, -17, 0],
+    [-70, -44, 0],
+    [-50, -46, 0],
+  ]
+
+  var positionsOffsetsRed = [
+    [0, 0, 0],
+    [21,41, 0],
+    [13, 20, 0],
+  ]
+
+  var positionsOffsetsGreen = [
+    [0, 0, 0],
+    [6,-54, 0],
+    [-34, -46, 0],
+    [-118,4,0],
+    [123,18,0],
+    [-67,-97,0],
+    [3,53,0],
+    [53,107,0],
+  ]
+
+
+  //declare array for position of groups of balls/flowers relative to each other
   var positionsOffsetsStem = [
+    [-20, -10, 0],//3*Math.sin(currTime*10)],
+    [-15, 20, 0],
     [0, 0, 0],
-    [30,-6, 0],
-    [-30, 49, 0],
-    [3, 0, 0],
-    [4, 0, 0],
-    [4, 0, 0]
+    [20, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
   ]
+
 
   // 3d model takes time to load, therefore check if drawCube is exist first before calling it
-  
   if (drawSphere !== undefined) {
     
     // for loop for multiple flowers ( j )
-    for(var j=0; j<6; j++) {
-      var relativePosToStem = positionsOffsetsStem[j]
+    //for(var j=0; j<6; j++) {
+      var relativePosToStem = positionsOffsetsStem[0]   //loop through array for the relative position of flowers to each other
       
-      for(var i=0; i<8; i++) {
-        var circleSize = circleSizes[i];      //loop through array for the size of circles
-        var posOffset = positionsOffsets[i];  //loop through array for the position of circles
+      for(var i=0; i<10; i++) {
+        var circleSize = circleSizesBlue[i];      //loop through array for the size of circles
+        var posOffset = positionsOffsetsBlue[i];  //loop through array for the position of circles
         var obj = {
           time: currTime,
           view: viewMatrix,
@@ -162,25 +271,85 @@ function render () {
          }
          // draw the sphere and pass the obj in for uniform
          drawSphere(obj)
-       }
-    }
-
-    /*
-    for(var i=0; i<8; i++) {
-      var circleSize = circleSizes[i];      //loop through array for the size of circles
-      var posOffset = positionsOffsets[i];  //loop through array for the position of circles
-      var obj = {                           // create an object for uniform
-        time: currTime,
-        view: viewMatrix,
-        projection: projectionMatrix,
-        size: circleSize,
-        translate: posOffset
-       }
-       // draw the sphere, pass the obj in for uniforms
-       drawSphere(obj)
-     }
-     */
+    } 
+   // }
   }
+ 
+  if (drawSphere !== undefined) {
+    
+    //for loop for multiple flowers ( j )
+    //for(var j=0; j<6; j++) {
+      //var relativePosToStem = positionsOffsetsStem[1]   //loop through array for the relative position of flowers to each other
+      
+      for(var i=0; i<5; i++) {
+        var circleSize = circleSizesYellow[i];      //loop through array for the size of circles
+        var posOffset = positionsOffsetsYellow[i];  //loop through array for the position of circles
+        var relativePosToStem = positionsOffsetsStem[1];
+        var obj = {
+          time: currTime,
+          view: viewMatrix,
+          projection: projectionMatrix,
+          size: circleSize,
+          translate: posOffset,
+          translateStem: relativePosToStem
+         }
+         // draw the sphere and pass the obj in for uniform
+         drawSphere(obj)
+    //}
+    }
+  }
+
+  if (drawSphere !== undefined) {
+          
+      for(var i=0; i<3; i++) {
+        var circleSize = circleSizesRed[i];      //loop through array for the size of circles
+        var posOffset = positionsOffsetsRed[i];  //loop through array for the position of circles
+        var relativePosToStem = positionsOffsetsStem[2];
+        var obj = {
+          time: currTime,
+          view: viewMatrix,
+          projection: projectionMatrix,
+          size: circleSize,
+          translate: posOffset,
+          translateStem: relativePosToStem
+         }
+         // draw the sphere and pass the obj in for uniform
+         drawSphere(obj)
+       //}
+    }
+  }
+
+  if (drawSphere !== undefined) {      
+      for(var i=0; i<8; i++) {
+        var circleSize = circleSizesGreen[i];      //loop through array for the size of circles
+        var posOffset = positionsOffsetsGreen[i];  //loop through array for the position of circles
+        var relativePosToStem = positionsOffsetsStem[3];
+        var obj = {
+          time: currTime,
+          view: viewMatrix,
+          projection: projectionMatrix,
+          size: circleSize,
+          translate: posOffset,
+          translateStem: relativePosToStem
+         }
+         // draw the sphere and pass the obj in for uniform
+         drawSphere(obj)
+    //}
+  }
+}
+  
+  if (drawStem1 !== undefined) {     
+        var obj = {
+          time: currTime,
+          view: viewMatrix,
+          projection: projectionMatrix,
+          size: 0.01,
+          translate: [0.0,0.0,0.0]
+         }
+         // draw the sphere and pass the obj in for uniform
+        // drawStem1(obj)
+       }
+    
 
   // make it loop
   window.requestAnimationFrame(render)

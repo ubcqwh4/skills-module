@@ -23,7 +23,7 @@ void main() {
 	d = d * 0.5 + 0.5; // 0.5 ~ 1
 
 
-	vec3 uColor = vec3(161.0/255.0, 136.0/255.0, 166.0/255.0);
+	vec3 uColor = vec3(143.0/255.0, 164.0/255.0, 191.0/255.0);
 	vec3 colorLighting = uColor * d;
 
 	gl_FragColor = vec4(colorLighting, 1.0);

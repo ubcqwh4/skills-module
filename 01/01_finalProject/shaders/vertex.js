@@ -13,9 +13,10 @@ uniform mat4 uViewMatrix;
 // setup the uniform for time
 uniform float uTime;
 uniform float uSize;
+
 // setup the uniform for translate
 uniform vec3 uTranslate;
-uniform vec3 uTranslateToStem;
+uniform vec3 uTranslateStem;
 
 // setup varying to pass the uv to the fragment
 varying vec2 vUV;
@@ -25,12 +26,14 @@ void main() {
   vec3 pos = aPosition;
 
   // apply size to sphere
-  pos = pos * uSize * 0.01;
+  pos = pos * uSize * 0.008;
+
 
   // add the translate to the position
-  pos += uTranslate*0.01;
+  pos += uTranslate*0.015;
 
-  // pos += uTranslateToStem * 0.1;
+
+  pos += uTranslateStem * 0.12;
 
   gl_Position = uProjectionMatrix * uViewMatrix * vec4(pos, 1.0);
 
