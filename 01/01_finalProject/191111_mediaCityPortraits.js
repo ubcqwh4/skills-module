@@ -72,7 +72,7 @@ var drawStem1
 
 // instead of creating the attributes ourselves, now loading the 3d model instead
 
-loadObj('./assets/cube.obj', function (obj) {
+loadObj('./assets/torus.obj', function (obj) {
   console.log('Model Loaded', obj)
 
   // create attributes
@@ -137,7 +137,7 @@ function render () {
 
   // recalculate the view matrix because we are constantly moving the camera position now
   // use mouseX, mouseY for the position of camera
-  var eye = [0, mouseY, 5]
+  var eye = [0, 5, 3]
   var center = [0, 0, 0]
   var up = [0, 1, 0]
   mat4.lookAt(viewMatrix, eye, center, up)
@@ -197,24 +197,24 @@ function render () {
 
   //declare array for position of balls relative to each other
   var positionsOffsetsBlue = [
-    [0, 0, 0],
-    [82,-48, 0],//9*Math.sin(currTime*20)],
-    [152, 7,0],
-    [66, 11, 0],
-    [49,-9, 0],
-    [92, 35, 0],
-    [52, 22, 0],
-    [74,-19, 0],
-    [20,-26, 0],
-    [27,-37, 0],
+    [0, 0, 80],
+    [82,-48, 80],//9*Math.sin(currTime*20)],
+    [152, 7,80],
+    [66, 11, 80],
+    [49,-9, 80],
+    [92, 35, 80],
+    [52, 22, 80],
+    [74,-19, 80],
+    [20,-26, 80],
+    [27,-37, 80],
   ]
 
   var positionsOffsetsYellow = [
-    [0, 0, 0],
-    [-58,-26, 0],
-    [6, -17, 0],
-    [-70, -44, 0],
-    [-50, -46, 0],
+    [0, 0, 100],
+    [-58,-26, 100],
+    [6, -17, 100],
+    [-70, -44, 100],
+    [-50, -46, 100],
   ]
 
   var positionsOffsetsRed = [
@@ -224,14 +224,14 @@ function render () {
   ]
 
   var positionsOffsetsGreen = [
-    [0, 0, 0],
-    [6,-54, 0],
-    [-34, -46, 0],
-    [-118,4,0],
-    [123,18,0],
-    [-67,-97,0],
-    [3,53,0],
-    [53,107,0],
+    [0, 0, -50],
+    [6,-54, -50],
+    [-34, -46, -50],
+    [-118,4,-50],
+    [123,18,-50],
+    [-67,-97,-50],
+    [3,53,-50],
+    [53,107,-50],
   ]
 
 
@@ -347,7 +347,7 @@ function render () {
           translate: [0.0,0.0,0.0]
          }
          // draw the sphere and pass the obj in for uniform
-        // drawStem1(obj)
+         //drawStem1(obj)
        }
     
 

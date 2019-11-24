@@ -26,7 +26,7 @@ void main() {
   vec3 pos = aPosition;
 
   // apply size to sphere
-  pos = pos * uSize * 0.008;
+  pos = pos * uSize * 0.0001;
 
 
   // add the translate to the position
