@@ -6,124 +6,125 @@
 	.st0{fill-opacity:0;}
 	.st1{fill:none;stroke:#000000;stroke-opacity:5.000000e-02;}
 	.st2{fill:#FFFFFF;stroke:#000000;stroke-miterlimit:10;}
-	.st3{fill:#49C1E2;}
-	.st4{fill:#EAE730;}
-	.st5{fill:#D33F27;}
-	.st6{fill:#5BBA47;}
+	.st3{fill:none;stroke:#000000;stroke-miterlimit:10;}
+	.st4{fill:#49C1E2;}
+	.st5{fill:#EAE730;}
+	.st6{fill:#D33F27;}
+	.st7{fill:#5BBA47;}
 </style>
 <g id="arc-tip" transform="translate(-330,-330) scale(2)">
-	<path id="arc" class="st0" d="M-168,182.9c53.4,0,105.4,17.1,148.3,48.8L-168,432.9V182.9z"/>
+	<path id="arc" class="st0" d="M-167,182.9c53.4,0,105.4,17.1,148.3,48.8L-167,432.9V182.9z"/>
 </g>
 <g id="concentric-circles" transform="translate(-330,-330) scale(2)">
-	<circle id="circle-0" class="st1" cx="-168" cy="432.9" r="250"/>
-	<circle id="circle-1" class="st1" cx="-168" cy="432.9" r="187.5"/>
-	<circle id="circle-2" class="st1" cx="-168" cy="432.9" r="125"/>
-	<circle id="circle-3" class="st1" cx="-168" cy="432.9" r="62.5"/>
+	<circle id="circle-0" class="st1" cx="-167" cy="432.9" r="250"/>
+	<circle id="circle-1" class="st1" cx="-167" cy="432.9" r="187.5"/>
+	<circle id="circle-2" class="st1" cx="-167" cy="432.9" r="125"/>
+	<circle id="circle-3" class="st1" cx="-167" cy="432.9" r="62.5"/>
 </g>
-<line id="pos-y-axis" class="st1" x1="-666.2" y1="535.7" x2="-666.2" y2="35.7"/>
-<line id="pos-x-axis" class="st1" x1="-666.2" y1="535.7" x2="-166.2" y2="535.7"/>
-<line id="neg-y-axis" class="st1" x1="-666.2" y1="535.7" x2="-666.2" y2="1035.7"/>
-<line id="neg-x-axis" class="st1" x1="-666.2" y1="535.7" x2="-1166.2" y2="535.7"/>
-<line id="quad-1-axis" class="st1" x1="-666.2" y1="535.7" x2="-312.6" y2="182.2"/>
-<line id="quad-2-axis" class="st1" x1="-666.2" y1="535.7" x2="-312.6" y2="889.3"/>
-<line id="quad-3-axis" class="st1" x1="-666.2" y1="535.7" x2="-1019.7" y2="889.3"/>
-<line id="quad-4-axis" class="st1" x1="-666.2" y1="535.7" x2="-1019.7" y2="182.2"/>
-<circle id="origin" cx="-666.2" cy="535.7" r="5"/>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -522.0403 703.9286)" style="fill:#C5C5C5;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">sa</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -397.6456 584.0358)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">morgan</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -687.9688 535.7235)" style="fill:#D33F27;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">ayodhya</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -736.0461 746.6686)" style="fill:#C5C5C5;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">algorithm</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -271.8808 490.6996)" style="fill:#BEBEBE;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">sydney</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -497.3615 728.8809)" style="fill:#BEBEBE;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">hong kong</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -632.1361 726.2055)" style="fill:#BEBEBE;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">ceo</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -583.867 600.2571)" style="fill:#B7B7B7;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">goldman</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -218.0223 527.8832)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">australia</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -346.743 522.8173)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">american</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -304.0931 566.016)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:15.2951px;">kansas</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -392.5804 423.4689)" style="fill:#A9A9A9;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">manchester</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -262.3807 470.0683)" style="fill:#A9A9A9;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">london</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -251.8695 623.9294)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">india</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -692.6328 525.7235)" style="fill:#D33F27;enable-background:new    ; font-family:'ArialMT'; font-size:19.052px;">centre</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -241.9508 399.9148)" style="fill:#8D8D8D;enable-background:new    ; font-family:'ArialMT'; font-size:19.8437px;">england</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -355.5235 568.2527)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:20.5902px;">delhi</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -461.4244 506.4967)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:21.2963px;">wales</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -279.4724 287.3839)" style="fill:#4D4D4D;enable-background:new    ; font-family:'ArialMT'; font-size:25.3924px;">liverpool</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -680.5952 562.0232)" style="fill:#D33F27;enable-background:new    ; font-family:'ArialMT'; font-size:26.8185px;">city&apos;s</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -371.2782 548.2974)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:30px;">zealand</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -792.4863 689.9534)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">global</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -892.7307 730.2191)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">probe</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -769.3777 392.7132)" style="fill:#CCCCCC;enable-background:new    ; font-family:'ArialMT'; font-size:10px;">tweets</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -786.9089 165.2037)" style="fill:#A9A9A9;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">jersey</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -798.6921 445.1885)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">united</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -855.2488 296.2339)" style="fill:#2D3392;enable-background:new    ; font-family:'ArialMT'; font-size:23.2108px;">league</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -791.9271 460.5203)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">sports</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -841.7059 459.6645)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">headlines</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -903.6143 432.5385)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:23.7913px;">election</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -900.4185 441.746)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">protesters</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -946.1444 327.485)" style="fill:#CCCCCC;enable-background:new    ; font-family:'ArialMT'; font-size:10px;">victory</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -802.804 540.0301)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:19.8437px;">trump</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -874.1365 520.7158)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:15.2951px;">aircraft</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -841.476 522.2216)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:17.3082px;">district</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -851.6212 530.7166)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:18.2092px;">ratings</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -906.8701 541.789)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:19.8437px;">leader</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -892.7396 503.0565)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">celebrating</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -834.1583 505.4505)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:15.2951px;">media</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -831.9077 492.3235)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">hotel</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -888.096 502.2863)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:20.5902px;">mayor</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -854.9415 501.4438)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">airline</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -862.0808 603.8846)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">premier</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -857.0325 663.9594)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">corporation</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -795.2586 597.4821)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">western</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -845.192 639.9032)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">ensure</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -861.825 626.8384)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">alleged</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -905.4243 569.5296)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">minister</text>
-<text pointer-events="auto" transform="matrix(1 0 0 1 -865.1417 546.5488)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:21.9661px;">university</text>
+<line id="pos-y-axis" class="st1" x1="-664.3" y1="535.7" x2="-664.3" y2="35.7"/>
+<line id="pos-x-axis" class="st1" x1="-664.3" y1="535.7" x2="-164.3" y2="535.7"/>
+<line id="neg-y-axis" class="st1" x1="-664.3" y1="535.7" x2="-664.3" y2="1035.7"/>
+<line id="neg-x-axis" class="st1" x1="-664.3" y1="535.7" x2="-1164.3" y2="535.7"/>
+<line id="quad-1-axis" class="st1" x1="-664.3" y1="535.7" x2="-310.7" y2="182.2"/>
+<line id="quad-2-axis" class="st1" x1="-664.3" y1="535.7" x2="-310.7" y2="889.3"/>
+<line id="quad-3-axis" class="st1" x1="-664.3" y1="535.7" x2="-1017.8" y2="889.3"/>
+<line id="quad-4-axis" class="st1" x1="-664.3" y1="535.7" x2="-1017.8" y2="182.2"/>
+<circle id="origin" cx="-664.3" cy="535.7" r="5"/>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -520.0901 703.9286)" style="fill:#C5C5C5;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">sa</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -395.6955 584.0358)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">morgan</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -686.0187 535.7235)" style="fill:#D33F27;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">ayodhya</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -734.096 746.6686)" style="fill:#C5C5C5;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">algorithm</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -269.9308 490.6996)" style="fill:#BEBEBE;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">sydney</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -495.4115 728.8809)" style="fill:#BEBEBE;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">hong kong</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -630.186 726.2055)" style="fill:#BEBEBE;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">ceo</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -581.9169 600.2571)" style="fill:#B7B7B7;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">goldman</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -216.0722 527.8832)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">australia</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -344.7929 522.8173)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">american</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -302.143 566.016)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:15.2951px;">kansas</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -390.6303 423.4689)" style="fill:#A9A9A9;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">manchester</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -260.4306 470.0683)" style="fill:#A9A9A9;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">london</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -249.9194 623.9294)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">india</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -690.6827 525.7235)" style="fill:#D33F27;enable-background:new    ; font-family:'ArialMT'; font-size:19.052px;">centre</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -240.0007 399.9148)" style="fill:#8D8D8D;enable-background:new    ; font-family:'ArialMT'; font-size:19.8437px;">england</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -353.5735 568.2527)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:20.5902px;">delhi</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -459.4743 506.4967)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:21.2963px;">wales</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -277.5223 287.3839)" style="fill:#4D4D4D;enable-background:new    ; font-family:'ArialMT'; font-size:25.3924px;">liverpool</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -678.6451 562.0232)" style="fill:#D33F27;enable-background:new    ; font-family:'ArialMT'; font-size:26.8185px;">city&apos;s</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -369.3282 548.2974)" style="fill:#5BBA47;enable-background:new    ; font-family:'ArialMT'; font-size:30px;">zealand</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -790.5362 689.9534)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">global</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -890.7806 730.2191)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">probe</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -767.4276 392.7132)" style="fill:#CCCCCC;enable-background:new    ; font-family:'ArialMT'; font-size:10px;">tweets</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -784.9588 165.2037)" style="fill:#A9A9A9;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">jersey</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -796.742 445.1885)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:16.3404px;">united</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -853.2988 296.2339)" style="fill:#2D3392;enable-background:new    ; font-family:'ArialMT'; font-size:23.2108px;">league</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -789.977 460.5203)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">sports</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -839.7558 459.6645)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">headlines</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -901.6642 432.5385)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:23.7913px;">election</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -898.4684 441.746)" style="fill:#EAE730;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">protesters</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -944.1943 327.485)" style="fill:#CCCCCC;enable-background:new    ; font-family:'ArialMT'; font-size:10px;">victory</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -800.8539 540.0301)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:19.8437px;">trump</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -872.1865 520.7158)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:15.2951px;">aircraft</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -839.5259 522.2216)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:17.3082px;">district</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -849.6711 530.7166)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:18.2092px;">ratings</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -904.92 541.789)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:19.8437px;">leader</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -890.7895 503.0565)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">celebrating</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -832.2082 505.4505)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:15.2951px;">media</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -829.9576 492.3235)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">hotel</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -886.1459 502.2863)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:20.5902px;">mayor</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -852.9914 501.4438)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">airline</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -860.1307 603.8846)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">premier</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -855.0825 663.9594)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:14.1588px;">corporation</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -793.3085 597.4821)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">western</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -843.2419 639.9032)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">ensure</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -859.8749 626.8384)" style="fill:#DE8227;enable-background:new    ; font-family:'ArialMT'; font-size:11.5382px;">alleged</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -903.4742 569.5296)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:12.9141px;">minister</text>
+<text pointer-events="auto" transform="matrix(1 0 0 1 -863.1916 546.5488)" style="fill:#49C1E2;enable-background:new    ; font-family:'ArialMT'; font-size:21.9661px;">university</text>
 <g>
 	<g id="concentric-circles_1_" transform="translate(-330,-330) scale(2)">
-		<circle id="circle-0_1_" class="st2" cx="501.5" cy="442.7" r="250"/>
-		<circle id="circle-1_1_" class="st2" cx="501.5" cy="442.7" r="187.5"/>
-		<circle id="circle-2_1_" class="st2" cx="501.5" cy="442.7" r="125"/>
-		<circle id="circle-3_1_" class="st2" cx="501.5" cy="442.7" r="62.5"/>
+		<circle id="circle-0_1_" class="st2" cx="502.5" cy="442.7" r="250"/>
+		<circle id="circle-1_1_" class="st2" cx="502.5" cy="442.7" r="187.5"/>
+		<circle id="circle-2_1_" class="st2" cx="502.5" cy="442.7" r="125"/>
+		<circle id="circle-3_1_" class="st2" cx="502.5" cy="442.7" r="62.5"/>
 	</g>
-	<line id="pos-y-axis_1_" class="st2" x1="673.1" y1="556.6" x2="673.1" y2="56.6"/>
-	<line id="pos-x-axis_1_" class="st2" x1="673.1" y1="556.6" x2="1173.1" y2="556.6"/>
-	<line id="neg-y-axis_1_" class="st2" x1="673.1" y1="556.6" x2="673.1" y2="1056.6"/>
-	<line id="neg-x-axis_1_" class="st2" x1="673.1" y1="556.6" x2="173.1" y2="556.6"/>
-	<line id="quad-1-axis_1_" class="st2" x1="673.1" y1="556.6" x2="1026.7" y2="203.1"/>
-	<line id="quad-2-axis_1_" class="st2" x1="673.1" y1="556.6" x2="1026.7" y2="910.2"/>
-	<line id="quad-3-axis_1_" class="st2" x1="673.1" y1="556.6" x2="319.6" y2="910.2"/>
-	<line id="quad-4-axis_1_" class="st2" x1="673.1" y1="556.6" x2="319.6" y2="203.1"/>
+	<line id="pos-y-axis_1_" class="st3" x1="675" y1="556.6" x2="675" y2="56.6"/>
+	<line id="pos-x-axis_1_" class="st3" x1="675" y1="556.6" x2="1175" y2="556.6"/>
+	<line id="neg-y-axis_1_" class="st3" x1="675" y1="556.6" x2="675" y2="1056.6"/>
+	<line id="neg-x-axis_1_" class="st3" x1="675" y1="556.6" x2="175" y2="556.6"/>
+	<line id="quad-1-axis_1_" class="st3" x1="675" y1="556.6" x2="1028.6" y2="203.1"/>
+	<line id="quad-2-axis_1_" class="st3" x1="675" y1="556.6" x2="1028.6" y2="910.2"/>
+	<line id="quad-3-axis_1_" class="st3" x1="675" y1="556.6" x2="321.5" y2="910.2"/>
+	<line id="quad-4-axis_1_" class="st3" x1="675" y1="556.6" x2="321.5" y2="203.1"/>
 </g>
 <g>
-	<circle class="st3" cx="536.8" cy="558.8" r="17"/>
-	<circle class="st3" cx="384.3" cy="551.8" r="11"/>
-	<circle class="st3" cx="454.7" cy="606.7" r="12"/>
-	<circle class="st3" cx="487.3" cy="567.4" r="6"/>
-	<circle class="st3" cx="444.8" cy="523.6" r="5"/>
-	<circle class="st3" cx="484.8" cy="536.2" r="3.5"/>
-	<circle class="st3" cx="516.8" cy="584.9" r="2.5"/>
-	<circle class="st3" cx="470.3" cy="547.2" r="6"/>
-	<circle class="st3" cx="462.1" cy="577.4" r="2.5"/>
-	<circle class="st3" cx="509.8" cy="595.1" r="2.5"/>
+	<circle class="st4" cx="538.7" cy="558.8" r="17"/>
+	<circle class="st4" cx="386.2" cy="551.8" r="11"/>
+	<circle class="st4" cx="456.6" cy="606.7" r="12"/>
+	<circle class="st4" cx="489.2" cy="567.4" r="6"/>
+	<circle class="st4" cx="446.7" cy="523.6" r="5"/>
+	<circle class="st4" cx="486.7" cy="536.2" r="3.5"/>
+	<circle class="st4" cx="518.7" cy="584.9" r="2.5"/>
+	<circle class="st4" cx="472.2" cy="547.2" r="6"/>
+	<circle class="st4" cx="464" cy="577.4" r="2.5"/>
+	<circle class="st4" cx="511.7" cy="595.1" r="2.5"/>
 </g>
 <g>
-	<circle class="st4" cx="552.6" cy="487.8" r="4.5"/>
-	<circle class="st4" cx="482.7" cy="443.7" r="8.5"/>
-	<circle class="st4" cx="476.4" cy="460.2" r="5"/>
-	<circle class="st4" cx="532.8" cy="489.2" r="4"/>
-	<circle class="st4" cx="540.7" cy="469" r="7.5"/>
+	<circle class="st5" cx="554.5" cy="487.8" r="4.5"/>
+	<circle class="st5" cx="484.6" cy="443.7" r="8.5"/>
+	<circle class="st5" cx="478.3" cy="460.2" r="5"/>
+	<circle class="st5" cx="534.7" cy="489.2" r="4"/>
+	<circle class="st5" cx="542.6" cy="469" r="7.5"/>
 </g>
 <g>
-	<circle class="st5" cx="673.1" cy="556.6" r="2.5"/>
-	<circle class="st5" cx="686" cy="576.3" r="7.5"/>
-	<circle class="st5" cx="665.2" cy="535.7" r="7"/>
+	<circle class="st6" cx="675" cy="556.6" r="2.5"/>
+	<circle class="st6" cx="687.9" cy="576.3" r="7.5"/>
+	<circle class="st6" cx="667.1" cy="535.7" r="7"/>
 </g>
-<circle class="st6" cx="1050" cy="550.9" r="23.5"/>
-<circle class="st6" cx="1043.2" cy="604.5" r="10.5"/>
-<circle class="st6" cx="1084" cy="596.7" r="6.5"/>
-<circle class="st6" cx="1167.4" cy="546.4" r="6"/>
-<circle class="st6" cx="1116.1" cy="647.4" r="5.5"/>
-<circle class="st6" cx="1047" cy="498" r="4.5"/>
-<circle class="st6" cx="996.9" cy="657.2" r="3.5"/>
-<circle class="st6" cx="926.9" cy="532.1" r="6"/>
+<circle class="st7" cx="1051.9" cy="550.9" r="23.5"/>
+<circle class="st7" cx="1045.1" cy="604.5" r="10.5"/>
+<circle class="st7" cx="1085.9" cy="596.7" r="6.5"/>
+<circle class="st7" cx="1169.3" cy="546.4" r="6"/>
+<circle class="st7" cx="1118" cy="647.4" r="5.5"/>
+<circle class="st7" cx="1048.9" cy="498" r="4.5"/>
+<circle class="st7" cx="998.8" cy="657.2" r="3.5"/>
+<circle class="st7" cx="928.8" cy="532.1" r="6"/>
 </svg>

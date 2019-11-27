@@ -26,14 +26,14 @@ void main() {
   vec3 pos = aPosition;
 
   // apply size to sphere
-  pos = pos * uSize * 0.0001;
+  pos = pos * uSize * 0.000003;
 
 
   // add the translate to the position
-  pos += uTranslate*0.015;
+  pos += uTranslate.xzy *0.02;
 
 
-  pos += uTranslateStem * 0.12;
+  pos += uTranslateStem.xzy * 0.15;
 
   gl_Position = uProjectionMatrix * uViewMatrix * vec4(pos, 1.0);
 
