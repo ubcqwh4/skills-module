@@ -1,0 +1,30 @@
+{
+  "name": "template-dfpi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/core": "^7.6.2",
+    "babelify": "^10.0.0",
+    "geom-parse-obj": "^1.0.0",
+    "gl-matrix": "^3.1.0",
+    "regl": "^1.3.13",
+    "socket.io-client": "^2.3.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "budo 191014_index.js --live -- -t babelify",
+    "start02": "budo index02.js --live -- -t babelify",
+    "start03": "budo 191015_index.js --live -- -t babelify",
+    "start04": "budo 191021_index.js --live -- -t babelify",
+    "start05": "budo 191023_index.js --live -- -t babelify",
+    "start06": "budo 191025_bauhausCube --live -- -t babelify",
+    "start07": "budo 191104_bauhausCube_withRemote --live -- -t babelify",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "texture": "budo ./lessons/texture.js --live -- -t babelify",
+    "final": "budo ./191111_mediaCityPortraits.js --live -- -t babelify"
+  },
+  "author": "",
+  "license": "ISC"
+}
