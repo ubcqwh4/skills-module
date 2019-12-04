@@ -34,7 +34,6 @@ void main() {
   pos += uTranslate.xzy *0.02;
   pos.y += uYOffset;
 
-
   pos += uTranslateStem.xzy * 0.15;
 
   gl_Position = uProjectionMatrix * uViewMatrix * vec4(pos, 1.0);

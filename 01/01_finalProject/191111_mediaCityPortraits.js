@@ -2,10 +2,10 @@
 
 var regl = require('regl')()                  //import the regl library
 var glm = require('gl-matrix')                //import gl-matrix for matrix & vector math 
-var mat4 = glm.mat4                           
+var mat4 = glm.mat4                           //create a holder for glm as a shortcut
 var loadObj = require('./utils/loadObj.js')   //import the loadObj tool to load objects from c4d
 const io = require('socket.io-client')        //import the socket.io to connect to server
-const socket = io('http:// 172.20.10.3:9876')
+const socket = io('http://172.20.10.3:9876')
 
 
 socket.on('cameramove', function (objReceived) {
@@ -283,10 +283,13 @@ function render () {
   clear()
 
   // 3d models take time to load, check if all objects are loaded before calling them
-  // use if statement to ensure render happens after all objects are loaded 
-  // only start drawing when models are loaded 
+  // use if statement to ensure render happens after all objects are loaded, only start drawing when models are loaded
+  // if drawRing =="undefined", return and keep waiting, don't render 
   if(drawRing == undefined 
     || drawTextPlane == undefined 
+    || imageYellowLoaded == false
+    || imageGreenLoaded == false
+    || imageRedLoaded == false
     || imageBlueLoaded == false) {
 
     console.log('waiting for obj to load')

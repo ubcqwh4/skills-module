@@ -4,7 +4,8 @@
 module.exports = {	
 	positionsOffsetsBlue:[
     [0, 0, 80],
-    [82,-48, 80],//9*Math.sin(currTime*20)],
+    [82,-48, 80],
+    //[82,9*Math.sin(currTime*20), 80], --> doesn't work 
     [152, 7,80],
     [66, 11, 80],
     [49,-9, 80],
@@ -35,9 +36,11 @@ module.exports = {
     [-67,-97,-50],
     [3,53,-50],
     [53,107,-50],
+
+    
   ],
   positionsOffsetsStem:[
-    [-20, -10, 0],//3*Math.sin(currTime*10)],
+    [-20, -10, 0],
     [-15, 20, 0],
     [0, 0, 0],
     [20, 0, 0],
