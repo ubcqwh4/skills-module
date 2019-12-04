@@ -1,39 +1,41 @@
-////////////////////////IMPORT DEPENDENCIES AND LIRBARIES////////////////////////////////
+/////////////////////////IMPORT DEPENDENCIES AND LIRBARIES////////////////////////////////
 
-var regl = require('regl')()                  //import the regl library
-var glm = require('gl-matrix')                //import gl-matrix for matrix & vector math 
-var mat4 = glm.mat4                           //create a holder for glm as a shortcut
-var loadObj = require('./utils/loadObj.js')   //import the loadObj tool to load objects from c4d
-const io = require('socket.io-client')        //import the socket.io to connect to server
-const socket = io('http://172.20.10.3:9876')
+var regl = require('regl')()                    // import the regl library
+var glm = require('gl-matrix')                  // import gl-matrix for matrix & vector math
+var mat4 = glm.mat4                             // create a holder for glm as a shortcut
+var mat3 = glm.mat3                             // create a holder for glm as a shortcut
+var vec3 = glm.vec3                             // create a holder for glm as a shortcut
+var loadObj = require('./utils/loadObj.js')     // import the loadObj tool to load objects from c4d
+var getAngle = require('./utils/getAngle.js')   // import the getAngle tool to calculate angle between rings and camera
+const io = require('socket.io-client')          // import the socket.io library
+const socket = io('http://172.20.10.3:9876')    // set up the socket connection with server ip
 
+var cameraPos = [0, 0, -5]                      // declare and initialize camera position
 
 socket.on('cameramove', function (objReceived) {
-  console.log('camera move')
   // o.view is the view matrix from the remote control, viewMatrix is local view matrix
-  mat4.copy(viewMatrix, objReceived.view)
+  mat4.copy(viewMatrix, objReceived.view)       // copy objReceived.view (remote info) to viewMatrix
+  cameraPos = objReceived.cameraPos             // cameraPos to use data received from server
   // gl-matrix.net
 })
 
+/////////////////////////IMPORT CODE FROM EXTERNAL FILES////////////////////////////////
 
-////////////////////////IMPORT CODE FROM EXTERNAL FILES////////////////////////////////
-
-// import shaders for rings 
+// import vert and frag shaders for rings
 var vertStr = require('./shaders/vertex.js')
 var fragStr = require('./shaders/fragment.js')
 
-// import shaders for text planes  
+// import vert and frag shaders for text planes
 var vertStrText = require('./shaders/vertex_text.js')
 var fragStrText = require('./shaders/fragment_text.js')
 
-// import position & size data 
+// import position & size data
 var positionOffsets = require('./positionOffsets')
 // console.log(positionOffsets.positionsOffsetsYellow)
 var circleSizes = require('./circleSize')
-//console.log('circleSizes', circleSizes)
+// console.log('circleSizes', circleSizes)
 
-
-////////////////////////SET PROJECTION AND VIEW MATRIX////////////////////////////////
+/////////////////////////SET PROJECTION AND VIEW MATRIX////////////////////////////////
 
 // create the projection matrix for field of view
 var projectionMatrix = mat4.create()
@@ -50,12 +52,15 @@ var center = [0, 0, 0]
 var up = [0, 1, 0]
 mat4.lookAt(viewMatrix, eye, center, up)
 
-////////////////////////?????????????????//////////////////////////////// 
+// create variable that makes text always face camera no matter rotation
+var inverseModelViewMatrix = mat3.create()
 
-// clear the background 
+/////////////////////////CREATE EVENT LISTENER TO GET MOUSE POSITION////////////////////////////////
+
+// clear the background
 var clear = () => {
   regl.clear({
-    color: [6.0/255.0, 24.0/255.0, 38.0/255.0, 1]  //dark blue
+    color: [6.0 / 255.0, 24.0 / 255.0, 38.0 / 255.0, 1] // dark blue
   })
 }
 
@@ -80,344 +85,354 @@ function map (value, start, end, newStart, newEnd) {
 
 // create event listener for mouse move event in order to get mouse positions
 window.addEventListener('mousemove', function (event) {
-  var x = event.clientX   //get the mouseX position from the event
-  var y = event.clientY   //get the mouseY position from the event
+  var x = event.clientX // get the mouseX position from the event
+  var y = event.clientY // get the mouseY position from the event
 
   // map mouse positions to be between -5 and 5
   mouseX = map(x, 0, window.innerWidth, -5, 5)
   mouseY = -map(y, 0, window.innerHeight, -5, 5)
-  
+
   // map Y position of text according to mouseX
   yOffset = map(x, 0, window.innerWidth, 0, 1.0)
 })
 
-
-////////////////////////LOAD OBJ & CREATE ATTRIBUTES FOR EACH//////////////////////////////// 
+/////////////////////////LOAD OBJ & CREATE ATTRIBUTES FOR EACH////////////////////////////////
 
 // declare variables for draw calls
-var drawRing;
-var drawTextPlane;
+var drawRing
+var drawTextPlane
 
 // load the first 3d model: ring
 loadObj('./assets/torus_xz.obj', function (obj) {
   console.log('Model Loaded', obj)
 
-    // create attributes 
-    const attributes = {
-      aPosition: regl.buffer(obj.positions),
-      aUV: regl.buffer(obj.uvs)
-    }
+  // create attributes to use for vertex shader
+  const attributes = {
+    aPosition: regl.buffer(obj.positions),
+    aUV: regl.buffer(obj.uvs)
+  }
 
-    // create the draw call and assign to var drawRing so we can call drawRing in the render function
-    drawRing = regl({
-      //create uniforms for the object
-      uniforms: {
-        uTime: regl.prop('time'),                     // uTime is the uniform name for shader, regl.prop('time') means look for 'time' variable in the object of draw call
-        uProjectionMatrix: regl.prop('projection'),   // look for variable 'projection' in the object of draw call  
-        uViewMatrix: regl.prop('view'),               // look for variable 'view' in the object of draw call  
-        uTranslate: regl.prop('translate'),           // look for variable 'translate' in the object of draw call 
-        uTranslateStem: regl.prop('translateStem'),   // look for variable 'translateStem' in the object of draw call  
-        uSize: regl.prop('size')                      // look for variable 'size' in the object of draw call 
-      },
-      //assign which shaders and attributes to use 
-      vert: vertStr,
-      frag: fragStr,
-      attributes: attributes,
-      count: obj.count 
-    })
+  // create the draw call and assign to var drawRing so we can call drawRing in the render function
+  drawRing = regl({
+    // create uniforms for the object
+    uniforms: {
+      uTime: regl.prop('time'),                   // uTime is the uniform name for shader, regl.prop('time') means look for 'time' variable in the object of draw call
+      uProjectionMatrix: regl.prop('projection'), // look for variable 'projection' in the object of draw call
+      uViewMatrix: regl.prop('view'),             // look for variable 'view' in the object of draw call
+      uTranslate: regl.prop('translate'),         // look for variable 'translate' in the object of draw call
+      uTranslateStem: regl.prop('translateStem'), // look for variable 'translateStem' in the object of draw call
+      uSize: regl.prop('size'),                   // look for variable 'size' in the object of draw call
+      uRingColor: regl.prop('ringColor')          // look for variable 'ringColor' in the object of draw call
+    },
+    // assign which shaders and attributes to use
+    vert: vertStr,
+    frag: fragStr,
+    attributes: attributes,
+    count: obj.count
+  })
 })
 
 // load the second 3d model: textPlane
 loadObj('./assets/text_plane.obj', function (obj) {
   console.log('Model Loaded', obj)
 
-      // create attributes
-      const attributes = {
-        aPosition: regl.buffer(obj.positions),
-        aUV: regl.buffer(obj.uvs)
-      }
+  // create attributes to use in vertex shader
+  const attributes = {
+    aPosition: regl.buffer(obj.positions),
+    aUV: regl.buffer(obj.uvs)
+  }
 
-      // create the draw call and assign to var drawTextPlane so we can call drawTextPlane in the render function
-      drawTextPlane = regl({
-        //create uniforms for the object
-        uniforms: {
-          uTime: regl.prop('time'),
-          uProjectionMatrix: regl.prop('projection'),
-          uViewMatrix: regl.prop('view'),
-          uTranslate: regl.prop('translate'),
-          uTranslateStem: regl.prop('translateStem'),
-          uSize: regl.prop('size'),
-          uTexture: regl.prop('texture'), 
-          uYOffset: regl.prop('yOffset')
-        },
-        //assign which shaders and attributes to use 
-        vert: vertStrText,
-        frag: fragStrText,
-        attributes: attributes,
-        //use blend function for the transparency of the textPlane 
-        blend: {
-          enable: true,
-          func: {
-            srcRGB: 'src alpha',
-            srcAlpha: 'src alpha',
-            dstRGB: 'one minus src alpha',
-            dstAlpha: 'one minus src alpha',
-          },
-        },
-        count: obj.count
-      })
+  // create the draw call and assign to var drawTextPlane so we can call drawTextPlane in the render function
+  drawTextPlane = regl({
+    // create uniforms for the object
+    uniforms: {
+      uTime: regl.prop('time'),
+      uProjectionMatrix: regl.prop('projection'),
+      uViewMatrix: regl.prop('view'),
+      uInvertViewMatrix: regl.prop('invert'),
+      uTranslate: regl.prop('translate'),
+      uTranslateStem: regl.prop('translateStem'),
+      uSize: regl.prop('size'),
+      uTexture: regl.prop('texture'),
+      uYOffset: regl.prop('yOffset')
+    },
+    // assign which shaders and attributes to use
+    vert: vertStrText,
+    frag: fragStrText,
+    attributes: attributes,
+    // use blend function for the transparency of the textPlane
+    blend: {
+      enable: true,
+      func: {
+        srcRGB: 'src alpha',
+        srcAlpha: 'src alpha',
+        dstRGB: 'one minus src alpha',
+        dstAlpha: 'one minus src alpha'
+      }
+    },
+    count: obj.count
+  })
 })
 
-////////////////////////LOAD TEXT AS TEXTURE ONTO TEXTPLANE//////////////////////////////// 
+/////////////////////////LOAD TEXT AS TEXTURE ONTO TEXTPLANE////////////////////////////////
 
-//declare variables and assign false to start with  
-var texture;
-var imageBlueLoaded = false;
-var imageYellowLoaded = false;
-var imageRedLoaded = false;
-var imageGreenLoaded = false;
+// declare variables and assign false to start with
+var texture
+var imageBlueLoaded = false
+var imageYellowLoaded = false
+var imageRedLoaded = false
+var imageGreenLoaded = false
 
-//declare array for each cluster and use words to complete file names later
-var imagesBlueToLoad = ['trump','minister','mayor','leader','celebrities','media','rating','university','hotel','district']
-var imagesYellowToLoad = ['election', 'united', 'protests','headlines','sports'];
-var imagesRedToLoad = ['city','centre','ayodhya'];
-var imagesGreenToLoad = ['zealand','delhi','kansas','australia','wales','india','american','morales'];
+// declare array for each cluster and use words to complete file names later
+var imagesBlueToLoad = ['trump', 'minister', 'mayor', 'leader', 'celebrities', 'media', 'rating', 'university', 'hotel', 'district']
+var imagesYellowToLoad = ['election', 'united', 'protests', 'headlines', 'sports']
+var imagesRedToLoad = ['city', 'centre', 'ayodhya']
+var imagesGreenToLoad = ['zealand', 'delhi', 'kansas', 'australia', 'wales', 'india', 'american', 'morales']
 
-//declare array for 
-var texturesBlue = [];
-var texturesYellow = [];
-var texturesRed = [];
-var texturesGreen = [];
+// declare array for
+var texturesBlue = []
+var texturesYellow = []
+var texturesRed = []
+var texturesGreen = []
 
 // LOAD BLUE IMAGES
 // go through each item in the imagesBlueToLoad array
-for(var i=0; i< imagesBlueToLoad.length; i++) {
-  //declare each item in imagesBlueToLoad[] as a filename to use later  
-  var fileName = imagesBlueToLoad[i];
-  
-  //create a holder for each image
-  var img = new Image()   
+for (var i = 0; i < imagesBlueToLoad.length; i++) {
+  // declare each item in imagesBlueToLoad[] as a filename to use later
+  var fileName = imagesBlueToLoad[i]
 
-  //load image into the image holder 
+  // create a holder for each image
+  var img = new Image()
+
+  // load image into the image holder
   img.onload = function () {
     var texture = regl.texture(this)
-    texturesBlue.push(texture);
-    // imageBlueLoaded is "true" when texturesBlue array is the same length as imagesBlueToLoad array 
-    if(texturesBlue.length == imagesBlueToLoad.length) {
-      imageBlueLoaded = true; 
+    texturesBlue.push(texture)
+    // imageBlueLoaded is "true" when texturesBlue array is the same length as imagesBlueToLoad array
+    if (texturesBlue.length == imagesBlueToLoad.length) {
+      imageBlueLoaded = true
       console.log('all blue images loaded')
     }
   }
 
   // set the source of the image and load the image onto GPU as texture
-  img.src = './assets/mediaPortrait/blueFlower/' + fileName + '.png';
+  img.src = './assets/mediaPortrait/blueFlower/' + fileName + '.png'
   console.log(i, './assets/mediaPortrait/blueFlower/' + fileName + '.png')
 }
 
-
 // LOAD YELLOW IMAGES
-for(var i=0; i< imagesYellowToLoad.length; i++) {
-  var fileName = imagesYellowToLoad[i];
-  
-  //create holder for the image
-  var img = new Image()   
+for (var i = 0; i < imagesYellowToLoad.length; i++) {
+  var fileName = imagesYellowToLoad[i]
 
-  img.onload = function () {
-    // console.log('loaded', this.src)
-    var texture = regl.texture(this)
-    texturesYellow.push(texture);
-    if(texturesYellow.length == imagesYellowToLoad.length) {
-      imageYellowLoaded = true;
-      console.log('all yellow images loaded')
-    }
-  }
-
-  img.src = './assets/mediaPortrait/yellowFlower/' + fileName + '.png';
-}
-
-
-// LOAD RED IMAGES
-for(var i=0; i< imagesRedToLoad.length; i++) {
-  var fileName = imagesRedToLoad[i];
-  
+  // create holder for the image
   var img = new Image()
 
   img.onload = function () {
     // console.log('loaded', this.src)
     var texture = regl.texture(this)
-    texturesRed.push(texture);
-    if(texturesRed.length == imagesRedToLoad.length) {
-      imageRedLoaded = true;
-      console.log('all red images loaded')
+    texturesYellow.push(texture)
+    if (texturesYellow.length == imagesYellowToLoad.length) {
+      imageYellowLoaded = true
+      console.log('all yellow images loaded')
     }
   }
 
-  img.src = './assets/mediaPortrait/redFlower/' + fileName + '.png';
+  img.src = './assets/mediaPortrait/yellowFlower/' + fileName + '.png'
 }
 
+// LOAD RED IMAGES
+for (var i = 0; i < imagesRedToLoad.length; i++) {
+  var fileName = imagesRedToLoad[i]
 
-// LOAD GREEN IMAGES
-for(var i=0; i< imagesGreenToLoad.length; i++) {
-  var fileName = imagesGreenToLoad[i];
-  
-  var img = new Image()  
+  var img = new Image()
 
   img.onload = function () {
     // console.log('loaded', this.src)
     var texture = regl.texture(this)
-    texturesGreen.push(texture);
-    if(texturesGreen.length == imagesGreenToLoad.length) {
-      imageGreenLoaded = true;
+    texturesRed.push(texture)
+    if (texturesRed.length == imagesRedToLoad.length) {
+      imageRedLoaded = true
+      console.log('all red images loaded')
+    }
+  }
+
+  img.src = './assets/mediaPortrait/redFlower/' + fileName + '.png'
+}
+
+// LOAD GREEN IMAGES
+for (var i = 0; i < imagesGreenToLoad.length; i++) {
+  var fileName = imagesGreenToLoad[i]
+
+  var img = new Image()
+
+  img.onload = function () {
+    // console.log('loaded', this.src)
+    var texture = regl.texture(this)
+    texturesGreen.push(texture)
+    if (texturesGreen.length == imagesGreenToLoad.length) {
+      imageGreenLoaded = true
       console.log('all green images loaded')
     }
   }
 
-  img.src = './assets/mediaPortrait/greenFlower/' + fileName + '.png';
+  img.src = './assets/mediaPortrait/greenFlower/' + fileName + '.png'
 }
 
-////////////////////////RENDER RINGS AND TEXTPLANES//////////////////////////////// 
+/////////////////////////RENDER RINGS AND TEXTPLANES////////////////////////////////
 
 function render () {
-
   // clear the background
   clear()
 
+  // create variable for angles between each cluster and camera position 
+  var angleBlue = getAngle(positionOffsets.positionsOffsetsStem[0], cameraPos)
+  var angleYellow = getAngle(positionOffsets.positionsOffsetsStem[1], cameraPos)
+  var angleRed = getAngle(positionOffsets.positionsOffsetsStem[2], cameraPos)
+  var angleGreen = getAngle(positionOffsets.positionsOffsetsStem[3], cameraPos)
+
+  // for text always facing front no matter rotation
+  mat3.fromMat4(inverseModelViewMatrix, viewMatrix)
+  mat3.invert(inverseModelViewMatrix, inverseModelViewMatrix)
+
   // 3d models take time to load, check if all objects are loaded before calling them
   // use if statement to ensure render happens after all objects are loaded, only start drawing when models are loaded
-  // if drawRing =="undefined", return and keep waiting, don't render 
-  if(drawRing == undefined 
-    || drawTextPlane == undefined 
-    || imageYellowLoaded == false
-    || imageGreenLoaded == false
-    || imageRedLoaded == false
-    || imageBlueLoaded == false) {
-
+  // if drawRing =="undefined", return and keep waiting, don't render
+  if (drawRing == undefined ||
+    drawTextPlane == undefined ||
+    imageYellowLoaded == false ||
+    imageGreenLoaded == false ||
+    imageRedLoaded == false ||
+    imageBlueLoaded == false) {
     console.log('waiting for obj to load')
     window.requestAnimationFrame(render)
-    return;
+    return
   }
 
-  //increase the time 
-  currTime += 0.01  
+  // increase the time
+  currTime += 0.01
 
   // recalculate the view matrix using remote control instead because camera position is now constantly moving
   // use mouseX, mouseY for the position of camera
   var eye = [mouseX, mouseY, 7]
   var center = [0, 0, 0]
   var up = [0, 1, 0]
-  mat4.lookAt(viewMatrix, eye, center, up)
+  // mat4.lookAt(viewMatrix, eye, center, up)
 
-   
-      for(var i=0; i<10; i++) {
-        var circleSize = circleSizes.circleSizesBlue[i];                  // for variable circleSize, go through size array for blue cluster 
-        var posOffset = positionOffsets.positionsOffsetsBlue[i];          // for variable posOffset, go through position array for blue cluster
-        var relativePosToStem = positionOffsets.positionsOffsetsStem[0];  // for variable relativePosToStem, use 1st item in positionsOffsetsStem[] as relative position to other clusters
-        var obj = {                           // create an object for uniforms                                                   
-          time: currTime,                     // create variable 'time' and assign 'currTime' to it 
-          view: viewMatrix,                   // create variable 'view' and assign 'viewMatrix' to it
-          projection: projectionMatrix,       // create variable 'projection' and assign 'projectionMatrix' to it
-          size: circleSize,                   // create variable 'size' and assign 'circleSize' to it, which goes through array 'circleSizes.circleSizesBlue[]'
-          translate: posOffset,               // create variable 'translate' and assign 'posOffset' to it, which goes through array 'circleSizes.circleSizesBlue[]'
-          translateStem: relativePosToStem    // create variable 'translateStem'  and assign 'relativePosToStem' to it, which uses 1st item in 'positionsOffsetsStem[]'
-        }
-        drawRing(obj)   // draw the ring and pass obj in for uniforms 
+  for (var i = 0; i < 10; i++) {
+    var circleSize = circleSizes.circleSizesBlue[i]                   // for variable circleSize, go through size array for blue cluster
+    var posOffset = positionOffsets.positionsOffsetsBlue[i]           // for variable posOffset, go through position array for blue cluster
+    var relativePosToStem = positionOffsets.positionsOffsetsStem[0]   // for variable relativePosToStem, use 1st item in positionsOffsetsStem[] as relative position to other clusters
+    var obj = {                           // create an object for uniforms
+      time: currTime,                     // create variable 'time' and assign 'currTime' to it
+      view: viewMatrix,                   // create variable 'view' and assign 'viewMatrix' to it
+      projection: projectionMatrix,       // create variable 'projection' and assign 'projectionMatrix' to it
+      size: circleSize,                   // create variable 'size' and assign 'circleSize' to it, which goes through array 'circleSizes.circleSizesBlue[]'
+      translate: posOffset,               // create variable 'translate' and assign 'posOffset' to it, which goes through array 'circleSizes.circleSizesBlue[]'
+      translateStem: relativePosToStem,   // create variable 'translateStem' and assign 'relativePosToStem' to it, which uses 1st item in 'positionsOffsetsStem[]'
+      ringColor: 1 - angleBlue / 180      // create variable 'ringColor' and use angle 
+    }
+    drawRing(obj)                         // draw the ring and pass obj in for uniforms
 
-        var obj = {                           // create an object for uniforms        
-          time: currTime,                     // create variable 'time' and assign 'currTime' to it 
-          view: viewMatrix,                   // create variable 'view' and assign 'viewMatrix' to it
-          projection: projectionMatrix,       // create variable 'projection' and assign 'projectionMatrix' to it
-          size: circleSize * 0.05,            // create variable 'size' and assign 'circleSize' to it, which goes through array 'circleSizes.circleSizesBlue[]', but make size small by 0.05x 
-          translate: posOffset,               // create variable 'translate' and assign 'posOffset' to it, which goes through array 'circleSizes.circleSizesBlue[]'
-          translateStem: relativePosToStem,   // create variable 'translateStem'  and assign 'relativePosToStem' to it, which uses 1st item in 'positionsOffsetsStem[]'  
-          texture: texturesBlue[i],           // create variable 'texture' and assign array 'texturesBlue' to it
-          yOffset: yOffset                    // create variable 'yOffset' and assign 'yOffset' to it
-        } 
-        drawTextPlane(obj)    // draw the text plane and pass obj in for uniforms
-      }
-  
-      
-      for(var i=0; i<5; i++) {
-        var circleSize = circleSizes.circleSizesYellow[i];                //go through size array for yellow cluster 
-        var posOffset = positionOffsets.positionsOffsetsYellow[i];        //go through position array for yellow cluster
-        var relativePosToStem = positionOffsets.positionsOffsetsStem[1];  //use 2nd item in positionsOffsetsStem[] as relative position with other clusters
-        var obj = {
-          time: currTime,
-          view: viewMatrix,
-          projection: projectionMatrix,
-          size: circleSize,
-          translate: posOffset,
-          translateStem: relativePosToStem
-         }
-         drawRing(obj)
+    var obj = {                           // create an object for uniforms
+      time: currTime,                     // create variable 'time' and assign 'currTime' to it
+      view: viewMatrix,                   // create variable 'view' and assign 'viewMatrix' to it
+      projection: projectionMatrix,       // create variable 'projection' and assign 'projectionMatrix' to it
+      invert: inverseModelViewMatrix,
+      size: circleSize * 0.05,            // create variable 'size' and assign 'circleSize' to it, which goes through array 'circleSizes.circleSizesBlue[]', but make size small by 0.05x
+      translate: posOffset,               // create variable 'translate' and assign 'posOffset' to it, which goes through array 'circleSizes.circleSizesBlue[]'
+      translateStem: relativePosToStem,   // create variable 'translateStem'  and assign 'relativePosToStem' to it, which uses 1st item in 'positionsOffsetsStem[]'
+      texture: texturesBlue[i],           // create variable 'texture' and assign array 'texturesBlue' to it
+      yOffset: 1 - angleBlue / 180,        // create variable 'yOffset' and....
+    }
+    drawTextPlane(obj)                    // draw the text plane and pass obj in for uniforms
+  }
 
-        var obj = {
-          time: currTime,
-          view: viewMatrix,
-          projection: projectionMatrix,
-          size: circleSize * 0.05,
-          translate: posOffset,
-          translateStem: relativePosToStem,
-          texture: texturesYellow[i],
-          yOffset: yOffset
-        }
-         drawTextPlane(obj)
-      }
+  for (var i = 0; i < 5; i++) {
+    var circleSize = circleSizes.circleSizesYellow[i]               // go through size array for yellow cluster
+    var posOffset = positionOffsets.positionsOffsetsYellow[i]       // go through position array for yellow cluster
+    var relativePosToStem = positionOffsets.positionsOffsetsStem[1] // use 2nd item in positionsOffsetsStem[] as relative position with other clusters
+    var obj = {
+      time: currTime,
+      view: viewMatrix,
+      projection: projectionMatrix,
+      size: circleSize,
+      translate: posOffset,
+      translateStem: relativePosToStem,
+      ringColor: 1 - angleYellow / 180
+    }
+    drawRing(obj)
 
-          
-      for(var i=0; i<3; i++) {
-        var circleSize = circleSizes.circleSizesRed[i];                   //go through size array for red cluster      
-        var posOffset = positionOffsets.positionsOffsetsRed[i];           //go through position array for red cluster
-        var relativePosToStem = positionOffsets.positionsOffsetsStem[2];  //use 3rd item in positionsOffsetsStem[] as relative position with other clusters
-        var obj = {
-          time: currTime,
-          view: viewMatrix,
-          projection: projectionMatrix,
-          size: circleSize,
-          translate: posOffset,
-          translateStem: relativePosToStem,
-         }
-         drawRing(obj)
+    var obj = {
+      time: currTime,
+      view: viewMatrix,
+      projection: projectionMatrix,
+      invert: inverseModelViewMatrix,
+      size: circleSize * 0.05,
+      translate: posOffset,
+      translateStem: relativePosToStem,
+      texture: texturesYellow[i],
+      yOffset: 1 - angleYellow / 180
+    }
+    drawTextPlane(obj)
+  }
 
-        var obj = {
-          time: currTime,
-          view: viewMatrix,
-          projection: projectionMatrix,
-          size: circleSize * 0.05,
-          translate: posOffset,
-          translateStem: relativePosToStem,
-          texture: texturesRed[i],
-          yOffset: yOffset
-         }
-         drawTextPlane(obj)
-      }  
+  for (var i = 0; i < 3; i++) {
+    var circleSize = circleSizes.circleSizesRed[i]                  // go through size array for red cluster
+    var posOffset = positionOffsets.positionsOffsetsRed[i]          // go through position array for red cluster
+    var relativePosToStem = positionOffsets.positionsOffsetsStem[2] // use 3rd item in positionsOffsetsStem[] as relative position with other clusters
+    var obj = {
+      time: currTime,
+      view: viewMatrix,
+      projection: projectionMatrix,
+      size: circleSize,
+      translate: posOffset,
+      translateStem: relativePosToStem,
+      ringColor: 1 - angleRed / 180
+    }
+    drawRing(obj)
 
+    var obj = {
+      time: currTime,
+      view: viewMatrix,
+      projection: projectionMatrix,
+      invert: inverseModelViewMatrix,
+      size: circleSize * 0.05,
+      translate: posOffset,
+      translateStem: relativePosToStem,
+      texture: texturesRed[i],
+      yOffset: 1 - angleRed / 180 
+    }
+    drawTextPlane(obj)
+  }
 
-      for(var i=0; i<8; i++) {
-        var circleSize = circleSizes.circleSizesGreen[i];                 //go through size array for green cluster   
-        var posOffset = positionOffsets.positionsOffsetsGreen[i];         //go through position array for green cluster
-        var relativePosToStem = positionOffsets.positionsOffsetsStem[3];  //use 4th item in positionsOffsetsStem[] as relative position with other clusters
-        var obj = {
-          time: currTime,
-          view: viewMatrix,
-          projection: projectionMatrix,
-          size: circleSize,
-          translate: posOffset,
-          translateStem: relativePosToStem,
-        }
-        drawRing(obj)
+  for (var i = 0; i < 8; i++) {
+    var circleSize = circleSizes.circleSizesGreen[i]                // go through size array for green cluster
+    var posOffset = positionOffsets.positionsOffsetsGreen[i]        // go through position array for green cluster
+    var relativePosToStem = positionOffsets.positionsOffsetsStem[3] // use 4th item in positionsOffsetsStem[] as relative position with other clusters
+    var obj = {
+      time: currTime,
+      view: viewMatrix,
+      projection: projectionMatrix,
+      size: circleSize,
+      translate: posOffset,
+      translateStem: relativePosToStem,
+      ringColor: 1 - angleGreen / 180
+    }
+    drawRing(obj)
 
-        var obj = {
-          time: currTime,
-          view: viewMatrix,
-          projection: projectionMatrix,
-          size: circleSize * 0.05,
-          translate: posOffset,
-          translateStem: relativePosToStem,
-          texture: texturesGreen[i],
-          yOffset: yOffset
-        }
-        drawTextPlane(obj)
-      }
+    var obj = {
+      time: currTime,
+      view: viewMatrix,
+      projection: projectionMatrix,
+      invert: inverseModelViewMatrix,
+      size: circleSize * 0.05,
+      translate: posOffset,
+      translateStem: relativePosToStem,
+      texture: texturesGreen[i],
+      yOffset: 1 - angleGreen / 180
+    }
+    drawTextPlane(obj)
+  }
 
   // make it loop
   window.requestAnimationFrame(render)

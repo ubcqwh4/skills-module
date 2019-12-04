@@ -2,48 +2,55 @@
 
 
 module.exports = {	
-	positionsOffsetsBlue:[
+
+  // position of each ring in yellow word cluster
+  positionsOffsetsBlue:[
     [0, 0, 80],
-    [82,-48, 80],
-    //[82,9*Math.sin(currTime*20), 80], --> doesn't work 
-    [152, 7,80],
-    [66, 11, 80],
-    [49,-9, 80],
-    [92, 35, 80],
-    [52, 22, 80],
-    [74,-19, 80],
-    [20,-26, 80],
-    [27,-37, 80],
+    [82,-48, 82], 
+    [152, 7,84],
+    [66, 11, 86],
+    [49,-9, 88],
+    [92, 35, 90],
+    [52, 22, 92],
+    [74,-19, 94],
+    [20,-26, 96],
+    [27,-37, 98],
   ],
-    positionsOffsetsYellow:[
+
+  // position of each ring in yellow word cluster
+  positionsOffsetsYellow:[
     [0, 0, 100],
-    [-58,-26, 100],
-    [6, -17, 100],
-    [-70, -44, 100],
-    [-50, -46, 100],
+    [-58,-26, 102],
+    [6, -17, 104],
+    [-70, -44, 106],
+    [-50, -46, 108],
   ],
+
+  // position of each ring in red word cluster
   positionsOffsetsRed:[
     [0, 0, 0],
-    [21,41, 0],
-    [13, 20, 0],
+    [21,41, 2],
+    [13, 20, 4],
   ],
+
+  // position of each ring in green word cluster
   positionsOffsetsGreen: [
     [0, 0, -50],
-    [6,-54, -50],
-    [-34, -46, -50],
-    [-118,4,-50],
-    [123,18,-50],
-    [-67,-97,-50],
-    [3,53,-50],
-    [53,107,-50],
-
-    
+    [6,-54, -48],
+    [-34, -46, -46],
+    [-118,4,-44],
+    [123,18,-42],
+    [-67,-97,-40],
+    [3,53,-44],
+    [53,107,-42],    
   ],
+
+  // relative position of clusters to each other 
   positionsOffsetsStem:[
-    [-20, -10, 0],
-    [-15, 20, 0],
+    [-20, -15, 0],
+    [-5, 15, 0],
     [0, 0, 0],
-    [20, 0, 0],
+    [15, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],

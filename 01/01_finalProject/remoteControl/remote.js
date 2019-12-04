@@ -18,7 +18,7 @@ GL.init(canvas, { alpha: false })
 
 const camera = new alfrid.CameraPerspective()
 camera.setPerspective(45 * Math.PI / 180, GL.aspectRatio, 0.01, 1000)
-const orbitalControl = new alfrid.OrbitalControl(camera, window, 5)
+const orbitalControl = new alfrid.OrbitalControl(camera, window, 8)
 orbitalControl.rx.value = orbitalControl.ry.value = 0.3
 
 //mouse position 
@@ -61,13 +61,16 @@ function render () {
   GL.clear(0, 0, 0, 1)
 
   GL.setMatrices(camera)
+
+  console.log('camera position', camera.position)
   bAxis.draw()
   bDots.draw()
   drawCube.draw()
 
   socket.emit('cameramove', {
     view: camera.matrix,
-    projection: camera.projection
+    projection: camera.projection,
+    cameraPos: camera.position
   })
 }
 
