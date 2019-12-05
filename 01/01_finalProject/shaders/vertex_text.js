@@ -1,26 +1,29 @@
 // module.exports is the preserved word for exporting
 // copy & paste the vertex shader from javascript file
-
 module.exports = `
 precision mediump float;
+
+// set up attributes for position and UV
 attribute vec3 aPosition;
 attribute vec2 aUV;
 
-// setup the uniforms for projection / view matrix
+// set up the uniforms for projection / view matrix
 uniform mat4 uProjectionMatrix;
 uniform mat4 uViewMatrix;
+
+// set up the uniform inverting view matrix so that text is always facing the camera no matter the rotation 
 uniform mat3 uInvertViewMatrix;
 
-// setup the uniform for time
+// set up the uniform for time and size
 uniform float uTime;
 uniform float uSize;
 
-// setup the uniform for moving positions  
+// set up the uniform for moving positions  
 uniform vec3 uTranslate;
 uniform vec3 uTranslateStem;
-uniform float uYOffset;
+uniform float uYOffset; 
 
-// setup varying to pass uv to fragment shader
+// set up varying to pass uv to fragment shader
 varying vec2 vUV;
 varying vec3 vNormal;
 

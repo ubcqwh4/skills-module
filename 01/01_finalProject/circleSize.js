@@ -1,8 +1,9 @@
-//circleSize.js
+// this file contains arrays for the sizes of rings and textplanes
 
-//declare array for size of balls
+// module.exports is the preserved word for exporting
 module.exports = {
 
+    // size of each ring in blue word cluster depending on how frequently it's mentioned (refer to excel file)
  	circleSizesBlue:[
     34,
     24,
@@ -16,6 +17,7 @@ module.exports = {
     5,
   ],
 
+    // size of each ring in yellow word cluster depending on how frequently it's mentioned (refer to excel file)
   	circleSizesYellow:[
     17,
     15,
@@ -29,6 +31,7 @@ module.exports = {
     0,
   ],
 
+    // size of each ring in red word cluster depending on how frequently it's mentioned (refer to excel file)
   	circleSizesRed:[
     15,
     14,
@@ -42,6 +45,7 @@ module.exports = {
     0,
   ],
 
+    // size of each ring in green word cluster depending on how frequently it's mentioned (refer to excel file)
   	circleSizesGreen:[
     47,
     21,

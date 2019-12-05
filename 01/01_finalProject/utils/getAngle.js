@@ -5,7 +5,6 @@ var vec3 = glm.vec3 // create a holder for glm as a shortcut
 
 const DEG = 180 / Math.PI
 
-
 function getAngle (stemPos, cameraPos) {
   var dir = vec3.fromValues(stemPos[0], 0, stemPos[2])
   vec3.normalize(dir, dir)

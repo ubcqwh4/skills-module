@@ -20,13 +20,16 @@ float diffuse(vec3 N, vec3 L) {
 
 void main() {
 	vec2 uv = vUV;
-	uv.y = 1.0 - uv.y;		// flip texture vertically	
+
+	// flip texture vertically
+	uv.y = 1.0 - uv.y;			
 
 	vec4 color = texture2D(uTexture, uv);
 	color.a *= smoothstep(0.0, 2.0, uYOffset);
 
+	// stop rendering for transparent part of texture
 	if(color.a <= 0.01) {
-		discard;			// stop rendering for transparent part
+		discard;			
 	}
 	gl_FragColor = color;
 }`

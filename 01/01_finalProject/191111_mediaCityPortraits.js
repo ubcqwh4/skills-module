@@ -1,16 +1,16 @@
 /////////////////////////IMPORT DEPENDENCIES AND LIRBARIES////////////////////////////////
 
-var regl = require('regl')()                    // import the regl library
-var glm = require('gl-matrix')                  // import gl-matrix for matrix & vector math
-var mat4 = glm.mat4                             // create a holder for glm as a shortcut
-var mat3 = glm.mat3                             // create a holder for glm as a shortcut
-var vec3 = glm.vec3                             // create a holder for glm as a shortcut
-var loadObj = require('./utils/loadObj.js')     // import the loadObj tool to load objects from c4d
-var getAngle = require('./utils/getAngle.js')   // import the getAngle tool to calculate angle between rings and camera
-const io = require('socket.io-client')          // import the socket.io library
-const socket = io('http://172.20.10.3:9876')    // set up the socket connection with server ip
+var regl = require('regl')()                        // import the regl library
+var glm = require('gl-matrix')                      // import gl-matrix for matrix & vector math
+var mat4 = glm.mat4                                 // create a holder for glm as a shortcut
+var mat3 = glm.mat3                                 // create a holder for glm as a shortcut
+var vec3 = glm.vec3                                 // create a holder for glm as a shortcut
+var loadObj = require('./utils/loadObj.js')         // import the loadObj tool to load objects from c4d
+var getAngle = require('./utils/getAngle.js')       // import the getAngle tool to calculate angle between rings and camera
+const io = require('socket.io-client')              // import the socket.io library
+const socket = io('http://192.168.103.182:9876')    // set up the socket connection with server ip
 
-var cameraPos = [0, 0, -5]                      // declare and initialize camera position
+var cameraPos = [0, 0, -5]                          // declare and initialize camera position
 
 socket.on('cameramove', function (objReceived) {
   // o.view is the view matrix from the remote control, viewMatrix is local view matrix
@@ -342,9 +342,10 @@ function render () {
       translate: posOffset,               // create variable 'translate' and assign 'posOffset' to it, which goes through array 'circleSizes.circleSizesBlue[]'
       translateStem: relativePosToStem,   // create variable 'translateStem'  and assign 'relativePosToStem' to it, which uses 1st item in 'positionsOffsetsStem[]'
       texture: texturesBlue[i],           // create variable 'texture' and assign array 'texturesBlue' to it
-      yOffset: 1 - angleBlue / 180,        // create variable 'yOffset' and....
+      yOffset: 1 - angleBlue / 180        // create variable 'yOffset' and....
     }
     drawTextPlane(obj)                    // draw the text plane and pass obj in for uniforms
+    console.log ('angleBlue', angleBlue)
   }
 
   for (var i = 0; i < 5; i++) {
@@ -361,6 +362,7 @@ function render () {
       ringColor: 1 - angleYellow / 180
     }
     drawRing(obj)
+    console.log ('angleYellow', angleYellow)
 
     var obj = {
       time: currTime,
