@@ -47,8 +47,8 @@ module.exports = {
 
   // relative position of clusters to each other (refer to ai file for x and y positions)
   positionsOffsetsStem:[
-    [-20, -15, 0],
-    [-5, 25, 5],
+    [-25, -15, 0],
+    [-5, 20, 5],
     [0, 0, 0],
     [15, 0, 0],
     [0, 0, 0],

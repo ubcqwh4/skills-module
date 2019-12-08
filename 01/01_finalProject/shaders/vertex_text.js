@@ -1,3 +1,5 @@
+// this vertex shader is for text planes  
+
 // module.exports is the preserved word for exporting
 // copy & paste the vertex shader from javascript file
 module.exports = `
@@ -11,7 +13,7 @@ attribute vec2 aUV;
 uniform mat4 uProjectionMatrix;
 uniform mat4 uViewMatrix;
 
-// set up the uniform inverting view matrix so that text is always facing the camera no matter the rotation 
+// set up the uniform inverting view matrix so that text is always facing the camera no matter the position 
 uniform mat3 uInvertViewMatrix;
 
 // set up the uniform for time and size
@@ -23,27 +25,31 @@ uniform vec3 uTranslate;
 uniform vec3 uTranslateStem;
 uniform float uYOffset; 
 
-// set up varying to pass uv to fragment shader
+// set up varying to pass uv and normal to fragment shader
 varying vec2 vUV;
 varying vec3 vNormal;
 
 void main() {
-  // 
+  // apply uInvertViewMatrix to position attribute 
   vec3 pos = uInvertViewMatrix * aPosition;
 
-  // apply size to sphere to make imported 3d model smaller
+  // apply size to rings and make imported 3d model 0.00003 times smaller
   pos = pos * uSize * 0.00003;
 
-  // add translate to the position of text plane to
+  // apply position to textplanes and make distance between textplanes 0.02 times smaller
+  // uTranslate.xzy inverts y and z positions to flatten perspective
   pos += uTranslate.xzy *0.02;
+  // add uYOffset to the y position of text planes
   pos.y += uYOffset;
 
-  // add the uTranslateStem to the position to change the relative position of 
+  // apply position to clusters of textplanes and make distance between textplanes 0.15 times smaller
+  // uTranslateStem.xzy inverts y and z positions to flatten perspective
   pos += uTranslateStem.xzy * 0.15;
 
+  // use this new position to calculate the final position  
   gl_Position = uProjectionMatrix * uViewMatrix * vec4(pos, 1.0);
 
+  // pass uv and normal to fragment shader
   vUV = aUV;
-
   vNormal = normalize(aPosition);
 }`

@@ -1,3 +1,5 @@
+// this vertex shader is for rings 
+
 // module.exports is the preserved word for exporting
 // copy & paste the vertex shader from javascript file
 module.exports = `
@@ -33,9 +35,9 @@ void main() {
   // uTranslateStem.xzy inverts y and z positions to flatten perspective
   pos += uTranslateStem.xzy * 0.15;
 
-  // 
+  // use this new position to calculate the final position   
   gl_Position = uProjectionMatrix * uViewMatrix * vec4(pos, 1.0);
 
-
+  // pass to fragment shader
   vNormal = normalize(aPosition);
 }`
