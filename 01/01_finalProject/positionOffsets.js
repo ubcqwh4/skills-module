@@ -3,7 +3,7 @@
 // module.exports is the preserved word for exporting
 module.exports = {	
 
-  // position of each ring in blue word cluster (refer to ai file for x and y positions)
+  // position of each ring in blue word cluster (refer to: data/191108_Position-Size-Data_Calculation for x and y positions)
   positionsOffsetsBlue:[
     [0, 0, 80],
     [82,-48, 82], 
@@ -17,7 +17,7 @@ module.exports = {
     [27,-37, 98],
   ],
 
-  // position of each ring in yellow word cluster (refer to ai file for x and y positions) 
+  // position of each ring in yellow word cluster (refer to: data/191108_Position-Size-Data_Calculation for x and y positions) 
   positionsOffsetsYellow:[
     [0, 0, 100],
     [-58,-26, 102],
@@ -26,14 +26,14 @@ module.exports = {
     [-50, -46, 108],
   ],
 
-  // position of each ring in red word cluster (refer to ai file for x and y positions)
+  // position of each ring in red word cluster (refer to: data/191108_Position-Size-Data_Calculation for x and y positions)
   positionsOffsetsRed:[
     [0, 0, 0],
     [21,41, 2],
     [13, 20, 4],
   ],
 
-  // position of each ring in green word cluster (refer to ai file for x and y positions)
+  // position of each ring in green word cluster (refer to: data/191108_Position-Size-Data_Calculation for x and y positions)
   positionsOffsetsGreen: [
     [0, 0, -50],
     [6,-54, -48],
@@ -45,7 +45,7 @@ module.exports = {
     [53,107,-42],    
   ],
 
-  // relative position of clusters to each other (refer to ai file for x and y positions)
+  // relative position of clusters to each other
   positionsOffsetsStem:[
     [-25, -15, 0],
     [-5, 20, 5],

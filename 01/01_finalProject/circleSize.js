@@ -3,7 +3,8 @@
 // module.exports is the preserved word for exporting
 module.exports = {
 
-    // size of each ring in blue word cluster depending on how frequently it's mentioned (refer to excel file)
+    // size of each ring in blue word cluster depending on how frequently it's mentioned 
+    // (refer to: data/191108_Position-Size-Data_Calculation for count/ring size)
  	circleSizesBlue:[
     34,
     24,
@@ -17,7 +18,8 @@ module.exports = {
     5,
   ],
 
-    // size of each ring in yellow word cluster depending on how frequently it's mentioned (refer to excel file)
+    // size of each ring in yellow word cluster depending on how frequently it's mentioned
+    // (refer to: data/191108_Position-Size-Data_Calculation for count/ring size)
   	circleSizesYellow:[
     17,
     15,
@@ -31,7 +33,8 @@ module.exports = {
     0,
   ],
 
-    // size of each ring in red word cluster depending on how frequently it's mentioned (refer to excel file)
+    // size of each ring in red word cluster depending on how frequently it's mentioned 
+    // (refer to: data/191108_Position-Size-Data_Calculation for count/ring size)
   	circleSizesRed:[
     15,
     14,
@@ -45,7 +48,8 @@ module.exports = {
     0,
   ],
 
-    // size of each ring in green word cluster depending on how frequently it's mentioned (refer to excel file)
+    // size of each ring in green word cluster depending on how frequently it's mentioned 
+    // (refer to: data/191108_Position-Size-Data_Calculation for count/ring size)
   	circleSizesGreen:[
     47,
     21,

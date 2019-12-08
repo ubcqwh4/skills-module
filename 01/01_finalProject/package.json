@@ -23,7 +23,7 @@
     "start07": "budo 191104_bauhausCube_withRemote --live -- -t babelify",
     "test": "echo \"Error: no test specified\" && exit 1",
     "texture": "budo ./lessons/texture.js --live -- -t babelify",
-    "final": "budo ./191111_mediaCityPortraits.js --live -- -t babelify"
+    "final": "budo ./frontend_cityFootPrint.js --live -- -t babelify"
   },
   "author": "",
   "license": "ISC"
